@@ -1,0 +1,4 @@
+(def alert
+    "Send Alerts to teams"
+    (where (and (state "critical") (not (service #"bosh_test*")))
+       tell-idefix))

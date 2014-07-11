@@ -1,0 +1,7 @@
+(def email ( mailer {:from "<%= p('riemann.mailer.from') %>"
+         :host "<%= p('riemann.mailer.smtp-server') %>"
+         :port <%= p('riemann.mailer.smtp-port') %>
+         :user "<%= p('riemann.mailer.smtp-user') %>"
+         :pass "<%= p('riemann.mailer.smtp-password') %>"}))
+
+(def tell-idefix (throttle 5 3600  (email "team-idefix@hybris.com")))

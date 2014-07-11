@@ -1,0 +1,8 @@
+---
+name: riemann
+
+dependencies:
+- java7
+
+files:
+- riemann/riemann-0.2.5.tar.bz2
