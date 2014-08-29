@@ -5,3 +5,4 @@
          :pass "<%= p('riemann.mailer.smtp-password') %>"}))
 
 (def tell-idefix (throttle 5 3600  (email "team-idefix@hybris.com")))
+(def tell-framefrog (throttle 5 3600  (email "team-framefrog@hybris.com")))

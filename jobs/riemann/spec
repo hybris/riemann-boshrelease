@@ -10,6 +10,8 @@ templates:
    config/cf.clj.erb: config/cf.clj
    config/graphite.clj.erb: config/graphite.clj
    config/mailer.clj.erb: config/mailer.clj
+   config/hipchat.clj.erb: config/hipchat.clj
+   config/mongodb.clj.erb: config/mongodb.clj
    config/riemann.config.erb: config/riemann.config
 
 packages:
@@ -37,3 +39,5 @@ properties:
     description: "SMTP User"
   riemann.mailer.smtp-password:
     description: "SMTP Password"
+  riemann.hipchat.token:
+    description: "Hipchat access token"
