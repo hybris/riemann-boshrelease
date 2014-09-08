@@ -13,3 +13,5 @@ blobs
 *~
 *#
 #*
+releases/**/*.tgz
+config/settings.yml
