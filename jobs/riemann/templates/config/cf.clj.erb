@@ -3,11 +3,11 @@
   (where (service #"<%= p('riemann.cf.name') %>.DEA.*.available_memory_ratio")
      (with :host "DEA"
         (coalesce 30 (smap folds/mean (
-           with {:host nil :service "CF1.hybris.available_memory_ratio"} reinject))))))
+           with {:host nil :service "<%= p('riemann.cf.name') %>.hybris.available_memory_ratio"} reinject))))))
 
 
 (def cf-measure
-   "Check CF health"
+   "Check cf_eu-west-1 health"
    (where (service "<%= p('riemann.cf.name') %>.hybris.available_memory_ratio")
       (where
          (> 0.2 metric)
