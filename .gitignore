@@ -14,7 +14,4 @@ blobs
 *#
 #*
 releases/**/*.tgz
-<<<<<<< HEAD
-=======
 config/settings.yml
->>>>>>> ab9498bbe9eedd0003252badacf883d0878cdcda
