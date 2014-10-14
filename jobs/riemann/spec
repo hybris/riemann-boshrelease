@@ -11,6 +11,7 @@ templates:
    config/graphite.clj.erb: config/graphite.clj
    config/mailer.clj.erb: config/mailer.clj
    config/riemann.config.erb: config/riemann.config
+   config/mongodb.clj.erb: config/mongodb.clj
 
 packages:
 - java7

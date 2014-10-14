@@ -1,4 +1,9 @@
 (def alert
     "Send Alerts to teams"
-    (where (and (state "critical") (not (service #"bosh_test*")))
+    (where
+      (and
+        (or (state "warning") (state "critical"))
+        (not (service #"bosh_test*")))
+       (where (host #".*mongodb.*")
+          tell-framefrog)
        tell-idefix))
