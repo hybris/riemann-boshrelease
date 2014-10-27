@@ -1,8 +1,19 @@
 (def alert
-    "Send Alerts to teams"
-    (where
+  "Send Alerts to teams"
+  (
+    where
+    (
+      and
       (or (state "warning") (state "critical"))
-       ;hc
-       (where (host #".*mongodb.*")
-          tell-framefrog)
-       tell-idefix))
+      (not (service #"bosh_test*"))
+    )
+
+    ( where (host #".*mongodb.*")       tell-framefrog )
+    ( where (host #".*elasticsearch.*") tell-framefrog )
+    ( where (host #".*kafka.*")         tell-framefrog  tell-predictor )
+    ( where (host #".*zookeeper.*")     tell-framefrog  tell-predictor )
+    ( where (host #".*cassandra.*")     tell-wombats    tell-predictor )
+
+    tell-idefix
+  )
+)

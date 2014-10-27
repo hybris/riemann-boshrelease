@@ -1,8 +1,16 @@
-(def email ( mailer {:from "<%= p('riemann.mailer.from') %>"
-         :host "<%= p('riemann.mailer.smtp-server') %>"
-         :port <%= p('riemann.mailer.smtp-port') %>
-         :user "<%= p('riemann.mailer.smtp-user') %>"
-         :pass "<%= p('riemann.mailer.smtp-password') %>"}))
+(def email
+  (
+    mailer {
+      :from "<%= p('riemann.mailer.from') %>"
+      :host "<%= p('riemann.mailer.smtp-server') %>"
+      :port <%= p('riemann.mailer.smtp-port') %>
+      :user "<%= p('riemann.mailer.smtp-user') %>"
+      :pass "<%= p('riemann.mailer.smtp-password') %>"
+    }
+  )
+)
 
-(def tell-idefix (throttle 5 3600  (email "team-idefix@hybris.com")))
-(def tell-framefrog (throttle 5 3600  (email "team-framefrog@hybris.com")))
+(def tell-idefix    (throttle 5 3600  (email "team-idefix@hybris.com")    ))
+(def tell-framefrog (throttle 5 3600  (email "team-framefrog@hybris.com") ))
+(def tell-predictor (throttle 5 3600  (email "team-predictor@hybris.com") ))
+(def tell-wombats   (throttle 5 3600  (email "team-wombats@hybris.com")   ))
