@@ -8,12 +8,10 @@
       (not (service #"bosh_test*"))
     )
 
-    ( where (host #".*mongodb.*")       tell-framefrog )
-    ( where (host #".*elasticsearch.*") tell-framefrog )
-    ( where (host #".*kafka.*")         tell-framefrog  tell-predictor )
-    ( where (host #".*zookeeper.*")     tell-framefrog  tell-predictor )
-    ( where (host #".*cassandra.*")     tell-wombats    tell-predictor )
-    
+    ( where (host #".*framefrog.*")   tell-framefrog )
+    ( where (host #".*predictor.*")   tell-predictor )
+    ( where (host #".*wombats.*")     tell-wombats )
+
     tell-idefix
   )
 )
