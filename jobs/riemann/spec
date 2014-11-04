@@ -13,11 +13,10 @@ templates:
    config/hipchat.clj.erb: config/hipchat.clj
    config/mongodb.clj.erb: config/mongodb.clj
    config/riemann.config.erb: config/riemann.config
-   config/mongodb.clj.erb: config/mongodb.clj
 
 packages:
-- java7
-- riemann
+  - java7
+  - riemann
 
 properties:
   riemann.cf.name:
