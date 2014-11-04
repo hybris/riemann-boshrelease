@@ -3,7 +3,3 @@ riemann/riemann-0.2.5.tar.bz2:
   object_id: f41b6b4c-b93d-4898-b373-b0c36df9ec04
   sha: b5122eb059b28e1be47812898e6444f80880e0c9
   size: 31402792
-java7/openjdk-1.7.0_55.tar.gz:
-  object_id: a3e1b3af-d894-4645-a721-2a160e816ab7
-  sha: 0788b91b35bfdc628143103b17de3194c39a305a
-  size: 31534443
