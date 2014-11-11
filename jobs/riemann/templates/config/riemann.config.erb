@@ -18,7 +18,7 @@
   (graphite-server {:host host}))
 
 
-; Expire old events from the index every 5 seconds.
+; Expire old events from the index every 30 seconds.
 (periodically-expire 30)
 
 
@@ -29,7 +29,8 @@
     ; Check CF events
     (where (service #"<%= p('riemann.cf.name') %>.*")
       cf-data
-      cf-measure)
+      cf-measure
+      cf-health)
 
 
 

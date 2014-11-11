@@ -12,3 +12,11 @@
       (where
          (> 0.2 metric)
             (with :state "critical" alert))))
+
+(def cf-health
+  (where (service "<%= p('riemann.cf.name') %>.*.healthy")
+    (streams
+      (expired alert)))
+
+  (where (service "<%= p('riemann.cf.name') %>.*.healthy")
+    (where (= 1 metric) alert)))
