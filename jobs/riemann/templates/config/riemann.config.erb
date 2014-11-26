@@ -1,15 +1,13 @@
 ; -*- mode: clojure; -*-
 ; vim: filetype=clojure
 
-(include "hipchat.clj")
 (include "mailer.clj")
 (include "alert.clj")
 (include "graphite.clj")
 (include "cf.clj")
 
 ; ########### Configurations #############
-
-(logging/init {:file "/var/log/riemann/riemann.log"})
+(logging/init {:console true :file "/var/vcap/sys/log/riemann/riemann.log"})
 
 (let [host "0.0.0.0"]
   (tcp-server {:host host})
@@ -23,7 +21,7 @@
 
 
 (let [index (index)
-      graph (async-queue! :graphite {:queue-size 1000} graph)]
+      graph (async-queue! :graphite {:max-pool-size <%= p("riemann.graphite.threadpool.maxsize") %>, :queue-size <%= p("riemann.graphite.threadpool.queue") %>} graph)]
   (streams
     index
     ; Check CF events
@@ -32,18 +30,14 @@
       cf-measure
       cf-health)
 
-
-
     ; Calculate an overall rate of events.
     (with {:metric 1 :host nil :state "ok" :service "events/sec"}
       (rate 5 index))
-
 
     ; Send to graphite
     graph
 
     alert
-
   )
   (include "mongodb.clj")
 )

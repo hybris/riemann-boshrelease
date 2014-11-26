@@ -10,7 +10,6 @@ templates:
    config/cf.clj.erb: config/cf.clj
    config/graphite.clj.erb: config/graphite.clj
    config/mailer.clj.erb: config/mailer.clj
-   config/hipchat.clj.erb: config/hipchat.clj
    config/mongodb.clj.erb: config/mongodb.clj
    config/riemann.config.erb: config/riemann.config
 
@@ -27,8 +26,14 @@ properties:
     description: "Graphite port"
     default: 2003
   riemann.graphite.pool:
-    description: "Graphite executor connections"
+    description: "The number of connections to keep open to Graphite"
     default: 20
+  riemann.graphite.threadpool.maxsize:
+    description: "The maximum allowed number of threads for Riemann ThreadPool Service"
+    default: 20
+  riemann.graphite.threadpool.queue:
+    description: "The queue size for Riemann ThreadPool Service"
+    default: 5000
   riemann.mailer.from:
     description: "Mail from address"
   riemann.mailer.smtp-server:
@@ -39,5 +44,3 @@ properties:
     description: "SMTP User"
   riemann.mailer.smtp-password:
     description: "SMTP Password"
-  riemann.hipchat.token:
-    description: "Hipchat access token"

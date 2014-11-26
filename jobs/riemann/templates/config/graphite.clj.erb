@@ -1,1 +1,9 @@
-(def graph (graphite {:host "<%= p('riemann.graphite.host') %>", :port <%= p('riemann.graphite.port') %>, :pool-size 20}))
+(def graph
+  (
+    graphite {
+      :host "<%= p('riemann.graphite.host') %>",
+      :port <%= p('riemann.graphite.port') %>,
+      :pool-size <%= p("riemann.graphite.pool") %>
+    }
+  )
+)
