@@ -7,16 +7,14 @@
 
 
 (def cf-measure
-   "Check cf_eu-west-1 health"
+   "Check available memory ratio"
    (where (service "<%= p('riemann.cf.name') %>.hybris.available_memory_ratio")
       (where
          (> 0.2 metric)
             (with :state "critical" alert))))
 
 (def cf-health
-  (where (service "<%= p('riemann.cf.name') %>.*.healthy")
-    (streams
-      (expired alert)))
-
-  (where (service "<%= p('riemann.cf.name') %>.*.healthy")
-    (where (= 1 metric) alert)))
+  "Check health"
+    (where (service #"<%= p('riemann.cf.name') %>.*.healthy")
+      (expired alert)
+      (where (= 1 metric) alert)))
