@@ -20,4 +20,6 @@ builds:
     version: '5.8'
   ff8b78b5-ee3f-4b8c-b6d6-8d8b7249ef15:
     version: '5.9'
+  afb2066c-ef5a-40c9-a08c-dd0b282fd9f9:
+    version: '5.10'
 format-version: '2'
