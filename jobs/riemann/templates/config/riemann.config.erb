@@ -16,8 +16,8 @@
   (graphite-server {:host host}))
 
 
-; Expire old events from the index every 30 seconds.
-(periodically-expire 30)
+; Expire old events from the index every 10 seconds.
+(periodically-expire 10)
 
 
 (let [index (index)

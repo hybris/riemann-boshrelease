@@ -14,10 +14,14 @@ templates:
    config/riemann.config.erb: config/riemann.config
 
 packages:
-  - java7
+  - java
   - riemann
 
 properties:
+  riemann.java.xms:
+    description: "Specifies the initial size of the memory allocation pool"
+  riemann.java.xmx:
+    description: "Specifies the maximum size of the memory allocation pool"
   riemann.cf.name:
     description: "Name of the CF Environment"
   riemann.graphite.host:
@@ -27,13 +31,13 @@ properties:
     default: 2003
   riemann.graphite.pool:
     description: "The number of connections to keep open to Graphite"
-    default: 20
+    default: 100
   riemann.graphite.threadpool.maxsize:
     description: "The maximum allowed number of threads for Riemann ThreadPool Service"
-    default: 20
+    default: 100
   riemann.graphite.threadpool.queue:
     description: "The queue size for Riemann ThreadPool Service"
-    default: 5000
+    default: 10000
   riemann.mailer.from:
     description: "Mail from address"
   riemann.mailer.smtp-server:
