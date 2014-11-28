@@ -22,4 +22,6 @@ builds:
     version: '5.9'
   afb2066c-ef5a-40c9-a08c-dd0b282fd9f9:
     version: '5.10'
+  0c516674-22c7-40a0-8a1b-906dcecb5d5f:
+    version: '6.0'
 format-version: '2'
