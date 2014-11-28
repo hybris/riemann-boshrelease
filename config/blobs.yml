@@ -1,9 +1,9 @@
 ---
-riemann/riemann-0.2.5.tar.bz2:
-  object_id: f41b6b4c-b93d-4898-b373-b0c36df9ec04
-  sha: b5122eb059b28e1be47812898e6444f80880e0c9
-  size: 31402792
-java7/openjdk-1.7.0_65.tar.gz:
-  object_id: 068301ab-110f-41a5-acac-a9d96f64427f
-  sha: 8e6d34305e11bd151e458af0125411a4e1797e80
-  size: 67008821
+java/openjdk-jre-trusty-1.8.0_25.tar.gz:
+  object_id: daa8e62e-17df-4954-9f8c-b19d8f93ed3c
+  sha: 33252952b6514d7fca61b61a2d7d1f812e741a03
+  size: 39158212
+riemann/riemann-0.2.6.tar.bz2:
+  object_id: 33e0a165-2caa-48db-9ae5-ab69220a4c26
+  sha: 254b11f7d9b0c575ca18915f0ecb3070de4231bd
+  size: 31508653
