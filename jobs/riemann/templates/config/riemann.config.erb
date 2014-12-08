@@ -23,21 +23,24 @@
 (let [index (index)
       graph (async-queue! :graphite {:max-pool-size <%= p("riemann.graphite.threadpool.maxsize") %>, :queue-size <%= p("riemann.graphite.threadpool.queue") %>} graph)]
   (streams
-    index
     ; Check CF events
     (where (service #"<%= p('riemann.cf.name') %>.*")
       cf-data
       cf-measure
       cf-health)
-
+    )
+  (streams
     ; Calculate an overall rate of events.
-    (with {:metric 1 :host nil :state "ok" :service "events/sec"}
-      (rate 5 index))
+    (with {:metric 1 :host "riemann" :state "normal" :service "riemann events_sec"}
+      (rate 5 index graph))
+  )
 
+  (streams
     ; Send to graphite
     graph
-
-    alert
+    )
+  (streams
+    alert)
   )
   (include "mongodb.clj")
 )
