@@ -1,0 +1,22 @@
+---
+packages:
+- name: java
+  version: 781d85b49608f57328d984f8456c7b735eee09f9
+  sha1: 206e6c5b9504e98f7332f56d879c4815142dc20f
+  fingerprint: 781d85b49608f57328d984f8456c7b735eee09f9
+  dependencies: []
+- name: riemann
+  version: 0b754a750229e5b8b02aa98f53b7f0d2768051f0
+  sha1: 4f381d0e4a65b13638635414f02dbfa7cc8dfa82
+  fingerprint: 0b754a750229e5b8b02aa98f53b7f0d2768051f0
+  dependencies:
+  - java
+jobs:
+- name: riemann
+  version: f0cb2ed73a08487b3fbd57212f1a01551f3c7ac5
+  fingerprint: f0cb2ed73a08487b3fbd57212f1a01551f3c7ac5
+  sha1: e131cb35f0e5fc7685e95fa8c16540bbde55c75a
+commit_hash: 7aab7402
+uncommitted_changes: true
+name: riemann-hybris
+version: '6.2'
