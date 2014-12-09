@@ -20,30 +20,28 @@
 (periodically-expire 10)
 
 
-(let [index (index)
+(let [index (default :ttl 60 (index))
       graph (async-queue! :graphite {:max-pool-size <%= p("riemann.graphite.threadpool.maxsize") %>, :queue-size <%= p("riemann.graphite.threadpool.queue") %>} graph)]
-  (streams
-    default :ttl 300
-      index)
+
+  (streams index)
 
   (streams
     ; Check CF events
     (where (service #"<%= p('riemann.cf.name') %>.*")
       cf-data
       cf-measure
-      cf-health)
-    )
+      cf-health))
+
   (streams
     ; Calculate an overall rate of events.
     (with {:metric 1 :host "riemann" :state "normal" :service "riemann events_sec"}
-      (rate 5 index graph))
-  )
+      (rate 5 index graph)))
 
   (streams
     ; Send to graphite
-    graph
-    )
-  (streams
-    alert)
+    graph)
+
+  (streams alert)
+
   (include "mongodb.clj")
 )
