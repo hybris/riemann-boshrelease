@@ -16,6 +16,4 @@
 (def cf-health
   "Check health"
     (where (service #"<%= p('riemann.cf.name') %>.*healthy")
-    (expired (with :state "critical" alert))
-    (where (not (== 1 metric))(with :state "critical"
-      (with :description "Health != 1" alert)))))
+    (expired (with :state "critical" alert))))
