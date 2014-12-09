@@ -23,6 +23,10 @@
 (let [index (index)
       graph (async-queue! :graphite {:max-pool-size <%= p("riemann.graphite.threadpool.maxsize") %>, :queue-size <%= p("riemann.graphite.threadpool.queue") %>} graph)]
   (streams
+    default :ttl 300
+      index)
+
+  (streams
     ; Check CF events
     (where (service #"<%= p('riemann.cf.name') %>.*")
       cf-data
