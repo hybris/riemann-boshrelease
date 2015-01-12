@@ -5,7 +5,8 @@
     (split
       (> metric 0.99) (with :state "blocker"  alert)
       (> metric 0.75) (with :state "critical" alert)
-      (> metric 0.6)  (with :state "warning"  alert)))
+      (> metric 0.6)  (with :state "warning"  alert)
+      (with :state "ok" alert)))
 
 
   ; ########### Uncomment to log all events with framefrog in hostname  ###########
