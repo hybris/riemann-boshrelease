@@ -4,7 +4,7 @@
     where
     (
       and
-      (or (state "warning") (state "critical"))
+      (or (state "warning") (state "critical") (state "blocker"))
       (not (service #"bosh_test*"))
     )
 

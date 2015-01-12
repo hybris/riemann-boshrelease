@@ -12,6 +12,7 @@ templates:
    config/mailer.clj.erb: config/mailer.clj
    config/mongodb.clj.erb: config/mongodb.clj
    config/riemann.config.erb: config/riemann.config
+   config/framefrog.clj.erb: config/framefrog.clj
 
 packages:
   - java
