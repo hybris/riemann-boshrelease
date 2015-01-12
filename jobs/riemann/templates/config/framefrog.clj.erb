@@ -3,9 +3,9 @@
   ; ########### Replica Set Tenant Count Capacity Reached (Repository.ReplicaSet.TenantCountCapacityReached) % ###########
   (where (service #".*ReplicaSet.TenantCountCapacityReached.*")
     (split
+      (> metric 0.99) (with :state "blocker"  alert)
       (> metric 0.75) (with :state "critical" alert)
-      (> metric 0.6) (with :state "warning" alert)
-      (with :state "ok" alert)))
+      (> metric 0.6)  (with :state "warning"  alert)))
 
 
   ; ########### Uncomment to log all events with framefrog in hostname  ###########
