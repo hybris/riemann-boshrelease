@@ -1,17 +1,18 @@
 (streams
+  (by [:host :service]
+    (where (not (state "expired"))
+      ; ########### Replica Set Tenant Count Capacity Reached (Repository.ReplicaSet.TenantCountCapacityReached) % ###########
+      (where (service #".*ReplicaSet.TenantCountCapacityReached.*")
+        (split
+          (> metric 0.99) (with :state "blocker"  alert)
+          (> metric 0.75) (with :state "critical" alert)
+          (> metric 0.6)  (with :state "warning"  alert)
+          (with :state "ok" alert)))
 
-  ; ########### Replica Set Tenant Count Capacity Reached (Repository.ReplicaSet.TenantCountCapacityReached) % ###########
-  (where (service #".*ReplicaSet.TenantCountCapacityReached.*")
-    (split
-      (> metric 0.99) (with :state "blocker"  alert)
-      (> metric 0.75) (with :state "critical" alert)
-      (> metric 0.6)  (with :state "warning"  alert)
-      (with :state "ok" alert)))
 
-
-  ; ########### Uncomment to log all events with framefrog in hostname  ###########
-  ; (where (host #".*framefrog.*")
-  ;   #(info %))
-
-  ;alert ; this alert is never called because we should re-index the event instead of calling directly alert in each conditions
+      ; ########### Uncomment to log all events with framefrog in hostname  ###########
+      ; (where (host #".*framefrog.*")
+      ;   #(info %))
+    )
+  )
 )

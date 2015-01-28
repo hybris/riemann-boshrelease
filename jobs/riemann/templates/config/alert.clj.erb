@@ -1,5 +1,17 @@
 (def alert
-  "Send Alerts to teams"
+  "Send alerts to teams"
+  <% if_p("riemann.victorops.apikey") do %>
+    (let [vo (victorops "<%= p("riemann.victorops.apikey") %>", "<%= p("riemann.victorops.routingkey") %>")]
+      (by [:host :service]
+        (where (not (state "expired"))
+          (changed-state {:init "ok"}
+            (where (state "ok") (:recover vo))
+            (where (state "critical") (:trigger vo))
+          )
+        )
+      )
+    )
+  <% else %>
   (
     where
     (
@@ -14,4 +26,5 @@
 
     tell-idefix
   )
+  <% end %>
 )

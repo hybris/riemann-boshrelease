@@ -49,3 +49,11 @@ properties:
     description: "SMTP User"
   riemann.mailer.smtp-password:
     description: "SMTP Password"
+  riemann.victorops.apiendpoint:
+    description: "VictorOps API URL endpoint"
+    default: "https://alert.victorops.com/integrations/generic/20131114/alert"
+  riemann.victorops.apikey:
+    description: "VictorOps API key"
+  riemann.victorops.routingkey:
+    description: "VictorOps routing key"
+    default: "riemann"

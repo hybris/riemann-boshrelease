@@ -2,6 +2,7 @@
 ; vim: filetype=clojure
 
 (include "mailer.clj")
+<% if_p("riemann.victorops.apikey") do %>(include "victorops.clj")<% end %>
 (include "alert.clj")
 (include "graphite.clj")
 (include "cf.clj")
@@ -18,7 +19,6 @@
 
 ; Expire old events from the index every 10 seconds.
 (periodically-expire 10)
-
 
 (let [index (default :ttl 60 (index))
       graph (async-queue! :graphite {:max-pool-size <%= p("riemann.graphite.threadpool.maxsize") %>, :queue-size <%= p("riemann.graphite.threadpool.queue") %>} graph)]
@@ -37,12 +37,13 @@
     (with {:metric 1 :host "riemann" :state "normal" :service "riemann events_sec"}
       (rate 5 index graph)))
 
-  (streams
-    ; Send to graphite
-    graph)
-
-  (streams alert)
-
   (include "mongodb.clj")
   (include "framefrog.clj")
+
+  (streams graph)
+
+  ;mongodb alerts are managed in mongodb.clj
+  (streams
+    (where (not (service #"mongodb.*"))
+      alert))
 )
