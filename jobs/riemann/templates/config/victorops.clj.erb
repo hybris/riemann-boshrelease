@@ -44,4 +44,5 @@
   [api-key routing-key]
   { :info         (fn [e] (post (format-event :INFO e) e api-key routing-key))
     :trigger      (fn [e] (post (format-event :CRITICAL e) e api-key routing-key))
+    :warning      (fn [e] (post (format-event :WARNING e) e api-key routing-key))
     :recover      (fn [e] (post (format-event :RECOVERY e) e api-key routing-key))})

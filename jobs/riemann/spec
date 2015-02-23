@@ -58,3 +58,6 @@ properties:
   riemann.victorops.routingkey:
     description: "VictorOps routing key"
     default: "riemann"
+  riemann.victorops.stable-time:
+    description: "Number of seconds an event state must remains the same before alerting"
+    default: "30"
