@@ -7,3 +7,7 @@ riemann/riemann-0.2.6.tar.bz2:
   object_id: 33e0a165-2caa-48db-9ae5-ab69220a4c26
   sha: 254b11f7d9b0c575ca18915f0ecb3070de4231bd
   size: 31508653
+riemann/riemann-0.2.8.tar.bz2:
+  object_id: fddb7ae0-5163-4bea-b9d9-8233d033ad20
+  sha: f77769345691f7276a58feb6be4ba3857753cf86
+  size: 31826729
