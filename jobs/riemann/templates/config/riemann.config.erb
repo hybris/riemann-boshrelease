@@ -14,7 +14,8 @@
   (tcp-server {:host host})
   (udp-server {:host host})
   (ws-server  {:host host})
-  (graphite-server {:host host}))
+  (graphite-server {:host host})
+)
 
 
 ; Expire old events from the index every 10 seconds.
@@ -30,20 +31,31 @@
     (where (service #"<%= p('riemann.cf.name') %>.*")
       cf-data
       cf-measure
-      cf-health))
+      cf-health
+    )
+  )
 
   (streams
     ; Calculate an overall rate of events.
     (with {:metric 1 :host "riemann" :state "normal" :service "riemann events_sec"}
-      (rate 5 index graph)))
+      (rate 5 index graph)
+    )
+  )
 
   (include "mongodb.clj")
   (include "framefrog.clj")
 
   (streams graph)
 
-  ;mongodb alerts are managed in mongodb.clj
+  ;some alerts are managed elsewhere
   (streams
-    (where (not (service #"mongodb.*"))
-      alert))
+    (where
+      (and
+        (not (service #"mongodb.*"))
+        (not (service #".*ReplicaSet.TenantCountCapacityReached.*"))
+        (not (service #"<%= p('riemann.cf.name') %>.*"))
+      )
+      alert
+    )
+  )
 )

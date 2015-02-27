@@ -60,4 +60,4 @@ properties:
     default: "riemann"
   riemann.victorops.stable-time:
     description: "Number of seconds an event state must remains the same before alerting"
-    default: "30"
+    default: 0

@@ -1,33 +1,23 @@
 (def alert
   "Send alerts to teams"
-  <% if p("riemann.victorops.apikey", false) %>
-    (let [vo (victorops "<%= p("riemann.victorops.apikey") %>", "<%= p("riemann.victorops.routingkey") %>")]
-      (by [:host :service]
-        (where (not (state "expired"))
-          (changed-state {:init "ok"}
-            (stable <%= p("riemann.victorops.stable-time") %> :state
-              (where (state "ok") (:recover vo))
-              (where (state "warning") (:warning vo))
-              (where (state "critical") (:trigger vo))
-            )
-          )
+<% if p("riemann.victorops.apikey", false) %>
+  (let [vo (victorops "<%= p("riemann.victorops.apikey") %>", "<%= p("riemann.victorops.routingkey") %>")]
+    (where (not (state "expired"))
+      (changed-state {:init "ok"}
+        (stable <%= p("riemann.victorops.stable-time") %> :state
+          (where (state "ok") (:recover vo))
+          (where (state "warning") (:warning vo))
+          (where (or (state "critical") (state "blocker")) (:trigger vo))
         )
       )
     )
-  <% else %>
-  (
-    where
-    (
-      and
-      (or (state "warning") (state "critical") (state "blocker"))
-      (not (service #"bosh_test*"))
-    )
-
-    ( where (host #".*framefrog.*")   tell-framefrog )
-    ( where (host #".*predictor.*")   tell-predictor )
-    ( where (host #".*wombats.*")     tell-wombats )
-
+  )
+<% else %>
+  (where (and (or (state "warning") (state "critical") (state "blocker")) (not (service #"bosh_test*")) (not (state "expired")))
+    (where (host #".*framefrog.*") tell-framefrog )
+    (where (host #".*predictor.*") tell-predictor )
+    (where (host #".*wombats.*") tell-wombats )
     tell-idefix
   )
-  <% end %>
+<% end %>
 )

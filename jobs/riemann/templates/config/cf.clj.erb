@@ -1,19 +1,30 @@
 (def cf-data
   "Calculate total available memory"
   (where (service #"<%= p('riemann.cf.name') %>.DEA.*available_memory_ratio")
-     (with :host "DEA"
-        (coalesce 30 (smap folds/mean (
-           with {:host nil :service "<%= p('riemann.cf.name') %>.hybris.available_memory_ratio"} reinject))))))
-
+    (with :host "DEA"
+      (coalesce 30
+        (smap folds/mean
+          (with {:host nil :service "<%= p('riemann.cf.name') %>.hybris.available_memory_ratio"} reinject)
+        )
+      )
+    )
+  )
+)
 
 (def cf-measure
-   "Check available memory ratio"
-   (where (service "<%= p('riemann.cf.name') %>.hybris.available_memory_ratio")
-      (where
-         (> 0.2 metric)
-            (with :state "critical" alert))))
+  "Check available memory ratio"
+  (where (and (service "<%= p('riemann.cf.name') %>.hybris.available_memory_ratio") (not (nil? metric)))
+    (split
+      (> metric 0.2)  (with :state "critical" alert)
+                      (with :state "ok" alert)
+    )
+  )
+)
 
 (def cf-health
   "Check health"
-    (where (service #"<%= p('riemann.cf.name') %>.*healthy")
-    (expired (with :state "critical" alert))))
+  (where (service #"<%= p('riemann.cf.name') %>.*healthy")
+    (where (state "ok") alert)
+    (where (state "expired") (with :state "critical" alert))
+  )
+)
