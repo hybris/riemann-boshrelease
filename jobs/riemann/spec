@@ -26,6 +26,9 @@ properties:
     description: "Specifies the maximum size of the memory allocation pool"
   riemann.cf.name:
     description: "Name of the CF Environment"
+  riemann.cf.memory_ratio_alert:
+    description: "CF available memory % before alerting (between 0 and 1)"
+    default: 0.8
   riemann.graphite.host:
     description: "Graphite hostname"
   riemann.graphite.port:

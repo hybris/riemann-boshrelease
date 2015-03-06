@@ -15,7 +15,7 @@
   "Check available memory ratio"
   (where (and (service "<%= p('riemann.cf.name') %>.hybris.available_memory_ratio") (not (nil? metric)))
     (split
-      (> metric 0.2)  (with :state "critical" alert)
+      (> metric <%= p('riemann.cf.memory_ratio_alert') %>)  (with :state "critical" alert)
                       (with :state "ok" alert)
     )
   )
