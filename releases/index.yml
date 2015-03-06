@@ -42,4 +42,6 @@ builds:
     version: '7.1'
   e02f9278-21e7-4981-8013-9acf27015280:
     version: '8.0'
+  ec566036-1abd-41e1-bf2f-f12f25d3392b:
+    version: '8.1'
 format-version: '2'
