@@ -54,6 +54,7 @@
         (not (service #"mongodb.*"))
         (not (service #".*ReplicaSet.TenantCountCapacityReached.*"))
         (not (service #"<%= p('riemann.cf.name') %>.*"))
+        (not (and (service #".*elasticsearch health.*") (state "warning")))
       )
       alert
     )
