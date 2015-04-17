@@ -5,6 +5,7 @@
 <% if_p("riemann.victorops.apikey") do %>(include "victorops.clj")<% end %>
 (include "alert.clj")
 (include "graphite.clj")
+<% if_p("riemann.influxdb.host") do %>(include "influxdb.clj")<% end %>
 (include "cf.clj")
 
 ; ########### Configurations #############
@@ -46,6 +47,17 @@
   (include "framefrog.clj")
 
   (streams graph)
+
+  <% if_p("riemann.influxdb.host") do %>
+  (streams
+    (fn [event]
+      (let [service (clojure.string/replace (:service event) " " ".")
+            series (if (:host event) (format "%s.%s" (:host event) service) (format "%s" service))]
+        (influx series {:time  (:time event) :value (:metric event)})
+      )
+    )
+  )
+  <% end %>
 
   ;some alerts are managed elsewhere
   (streams

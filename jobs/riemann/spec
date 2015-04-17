@@ -64,3 +64,14 @@ properties:
   riemann.victorops.stable-time:
     description: "Number of seconds an event state must remains the same before alerting"
     default: 0
+  riemann.influxdb.host:
+    description: "InfluxDB host"
+  riemann.influxdb.port:
+    description: "InfluxDB port"
+    default: 8086
+  riemann.influxdb.username:
+    description: "InfluxDB database username"
+  riemann.influxdb.password:
+    description: "InfluxDB database password"
+  riemann.influxdb.database:
+    description: "InfluxDB database"
