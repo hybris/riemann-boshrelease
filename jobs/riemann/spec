@@ -74,5 +74,5 @@ properties:
     description: "InfluxDB database username"
   riemann.influxdb.password:
     description: "InfluxDB database password"
-  riemann.influxdb.database:
+  riemann.influxdb.db:
     description: "InfluxDB database"
