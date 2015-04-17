@@ -14,6 +14,7 @@ templates:
    config/riemann.config.erb: config/riemann.config
    config/victorops.clj.erb: config/victorops.clj
    config/framefrog.clj.erb: config/framefrog.clj
+   config/influxdb.clj.erb: config/influxdb.clj
 
 packages:
   - java
