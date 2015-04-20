@@ -6,7 +6,7 @@
   (let [client (capacitor.core/make-client opts) events-in (capacitor.async/make-chan) resp-out (capacitor.async/make-chan)]
     (capacitor.async/run! events-in resp-out client 100 10000)
     (fn [series payload]
-      (let [p (merge payload { :series series :time (* 1000 (:time payload)) ;; s => ms
+      (let [p (merge payload { :series series :time (* 1000 (:time payload)) ;; s → ms
         })]
         (clojure.core.async/put! events-in p)
       )
