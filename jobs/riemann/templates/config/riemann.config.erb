@@ -19,8 +19,8 @@
 )
 
 
-; Expire old events from the index every 10 seconds.
-(periodically-expire 10)
+; Expire old events from the index every 30 seconds.
+(periodically-expire 30)
 
 (let [index (default :ttl 60 (index))
       graph (async-queue! :graphite {:max-pool-size <%= p("riemann.graphite.threadpool.maxsize") %>, :queue-size <%= p("riemann.graphite.threadpool.queue") %>} graph)]
@@ -32,7 +32,8 @@
     (where (service #"<%= p('riemann.cf.name') %>.*")
       cf-data
       cf-measure
-      cf-health
+      ; cf-health
+      cf-router
     )
   )
 
