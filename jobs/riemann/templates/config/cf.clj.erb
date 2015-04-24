@@ -32,14 +32,14 @@
 (def cf-router
   "Router Health Check"
 
-  ; Make sure port 80 is available
-  (where (service #".*Router.*heartbeat")
-    (split
-      (= metric 1) (with :state "ok"       alert)
-                   (with :state "critical" alert)
-  )
-
   (where (and (not (state "expired")) (not (nil? metric)))
+
+    ; Make sure port 80 is available
+    (where (service #".*Router.*heartbeat")
+      (split
+        (= metric 1) (with :state "ok"       alert)
+                     (with :state "critical" alert)
+    )
 
     ; ########### Check last updated time ###########
     (where (service #".*Router.*ms_since_last_registry_update")
