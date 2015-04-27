@@ -37,8 +37,8 @@
     ; Make sure port 80 is available
     (where (service #".*Router.*heartbeat")
       (split
-        (= metric 1) (with :state "ok"       alert)
-                     (with :state "critical" alert)
+        (= metric 1.0) (with :state "ok"       alert)
+                       (with :state "critical" alert)
     )
 
     ; ########### Check last updated time ###########
