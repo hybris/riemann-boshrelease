@@ -50,4 +50,6 @@ builds:
     version: '8.3'
   a2d8e06b-6c6b-47fd-94bd-23e4e7cba85c:
     version: '8.4'
+  2bc97a92-0772-4900-b8e6-c74337edce21:
+    version: '8.5'
 format-version: '2'
