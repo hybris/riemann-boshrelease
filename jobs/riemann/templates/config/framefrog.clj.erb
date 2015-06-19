@@ -1,7 +1,7 @@
 (streams
   (where (and (not (state "expired")) (not (nil? metric)))
     ; ########### Replica Set Tenant Count Capacity Reached (Repository.ReplicaSet.TenantCountCapacityReached) % ###########
-    (where (service #".*ReplicaSet_TenantCountCapacityReached.*")
+    (where (service #".*TenantCountCapacityReached.*")
       (split
         (> metric 0.99) (with :state "blocker"  alert)
         (> metric 0.75) (with :state "critical" alert)
