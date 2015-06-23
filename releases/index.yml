@@ -56,4 +56,6 @@ builds:
     version: '8.6'
   bed4a640-c5d6-43dc-b8e9-dc324c0b25c1:
     version: '8.7'
+  c6d8d3de-d8e7-485e-8866-48fab6cc16f0:
+    version: '8.8'
 format-version: '2'
