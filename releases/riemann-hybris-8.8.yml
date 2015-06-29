@@ -13,10 +13,10 @@ packages:
   - java
 jobs:
 - name: riemann
-  version: 40ecefcd4a77c7a82d7b82471915a84c5ee6cdba
-  fingerprint: 40ecefcd4a77c7a82d7b82471915a84c5ee6cdba
-  sha1: 5eba5a8b16cb7f6932587459455b628ef47b6436
-commit_hash: 9875635a
+  version: a535808d4f18e9df13e4efd13e9e30a38fced565
+  fingerprint: a535808d4f18e9df13e4efd13e9e30a38fced565
+  sha1: a5a01b7c876275fdc573cc5d8fe10737f14814fc
+commit_hash: 17f6a7ae
 uncommitted_changes: true
 name: riemann-hybris
-version: '8.7'
+version: '8.8'

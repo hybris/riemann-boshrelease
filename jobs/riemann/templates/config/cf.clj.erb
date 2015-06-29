@@ -52,22 +52,22 @@
     )
 
     ; ########### Check routers' total routes to make sure they match between the group ###########
-    (where (service #".*Router.*total_routes")
-      ; Find the mode (most frequent value in the pool) and alert all routers that are not following it
-      (coalesce
-        (smapcat (fn [events]
-                   (let [freq (frequencies (map :metric events))
-                         mode (apply max-key freq (keys freq))]
-                     (map
-                       (split
-                         (= metric mode) (with :state "ok"       alert)
-                                         (with :state "critical" alert)
-                       )
-                      events)
-                    )
-                  )
-        )
-      )
-    )
+    ; (where (service #".*Router.*total_routes")
+    ;   ; Find the mode (most frequent value in the pool) and alert all routers that are not following it
+    ;   (coalesce
+    ;     (smapcat (fn [events]
+    ;                (let [freq (frequencies (map :metric events))
+    ;                      mode (apply max-key freq (keys freq))]
+    ;                  (map
+    ;                    (split
+    ;                      (= metric mode) (with :state "ok"       alert)
+    ;                                      (with :state "critical" alert)
+    ;                    )
+    ;                   events)
+    ;                 )
+    ;               )
+    ;     )
+    ;   )
+    ; )
   ) ; where
 ) ;def
