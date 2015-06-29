@@ -15,6 +15,7 @@ templates:
    config/victorops.clj.erb: config/victorops.clj
    config/framefrog.clj.erb: config/framefrog.clj
    config/influxdb.clj.erb: config/influxdb.clj
+   config/bosh.clj.erb: config/bosh.clj
 
 packages:
   - java
