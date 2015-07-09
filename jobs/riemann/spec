@@ -16,6 +16,7 @@ templates:
    config/framefrog.clj.erb: config/framefrog.clj
    config/influxdb.clj.erb: config/influxdb.clj
    config/bosh.clj.erb: config/bosh.clj
+   config/log-dispatcher.clj: config/log-dispatcher.clj
 
 packages:
   - java
