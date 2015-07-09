@@ -60,4 +60,6 @@ builds:
     version: '8.8'
   5423914a-371c-40da-9088-a8015242663c:
     version: '8.9'
+  101c5e04-f748-4059-888f-261242547290:
+    version: '8.10'
 format-version: '2'
