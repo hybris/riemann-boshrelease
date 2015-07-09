@@ -2,13 +2,6 @@
   "BOSH Health data"
 
   (where (and (not (state "expired")) (not (nil? metric)))
-    ; Check VM health
-    (where (service #".*system_healthy")
-      (split
-        (not= metric 1) (with :state "critical" alert)
-                          (with :state "ok"       alert)
-      )
-    )
 
     (where (service #".*system_mem_percent")
       (split
