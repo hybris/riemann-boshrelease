@@ -1,3 +1,8 @@
+(def send-hm-alert
+  "Send bosh-helth data"
+  (changed :state alert)
+)
+
 (def bosh-hm
   "BOSH Health data"
 
@@ -35,8 +40,3 @@
     )
   ) ; where
 ) ;def
-
-(def send-hm-alert
-  "Send bosh-helth data"
-  (changed :state alert)
-)
