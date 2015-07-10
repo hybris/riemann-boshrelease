@@ -3,33 +3,40 @@
 
   (where (and (not (state "expired")) (not (nil? metric)))
 
-    (where (service #".*system_mem_percent")
-      (split
-        (> metric 90) (with :state "critical" alert)
-        (> metric 80) (with :state "warning" alert)
-                        (with :state "ok" alert)
+    (where (not (service #".*runner_z.*"))
+      (where (service #".*system_mem_percent")
+        (split
+          (> metric 90) (with :state "critical" send-hm-alert)
+          (> metric 80) (with :state "warning" send-hm-alert)
+                          (with :state "ok" send-hm-alert)
+        )
       )
     )
     (where (service #".*system_disk_ephemeral_percent")
       (split
-        (> metric 90) (with :state "critical" alert)
-        (> metric 80) (with :state "warning" alert)
-                        (with :state "ok" alert)
+        (> metric 90) (with :state "critical" send-hm-alert)
+        (> metric 80) (with :state "warning" send-hm-alert)
+                        (with :state "ok" send-hm-alert)
       )
     )
     (where (service #".*system_disk_system_percent")
       (split
-        (> metric 90) (with :state "critical" alert)
-        (> metric 80) (with :state "warning" alert)
-                        (with :state "ok" alert)
+        (> metric 90) (with :state "critical" send-hm-alert)
+        (> metric 80) (with :state "warning" send-hm-alert)
+                        (with :state "ok" send-hm-alert)
       )
     )
     (where (service #".*system_swap_percent")
       (split
-        (> metric 90) (with :state "critical" alert)
-        (> metric 80) (with :state "warning" alert)
-                        (with :state "ok" alert)
+        (> metric 90) (with :state "critical" send-hm-alert)
+        (> metric 80) (with :state "warning" send-hm-alert)
+                        (with :state "ok" send-hm-alert)
       )
     )
   ) ; where
 ) ;def
+
+(def send-hm-alert
+  "Send bosh-helth data"
+  (changed :state alert)
+)
