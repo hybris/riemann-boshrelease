@@ -1,0 +1,44 @@
+meta:
+  environment: ~
+
+update:
+  canaries: 1
+  max_in_flight: 50
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000
+  serial: false
+
+jobs:
+  - name: riemann
+    templates:
+    - name: riemann
+      release: riemann-hybris
+    instances: 1
+    persistent_disk: 0
+    resource_pool: small_z1
+    networks: (( merge ))
+    properties:
+      riemann:
+        cf:
+          name: "cf1"
+        java:
+          xms: 10240M
+          xmx: 10240M
+        graphite:
+          host: "graphite.cf1.hybris.com"
+          pool: 100
+          threadpool:
+            queue: 10000
+            maxsize: 100
+        victorops:
+          apikey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          apiendpoint: foobar
+          routingkey: "idefix"
+        mailer:
+          from: "riemann@cf1.hybris.com"
+          smtp-server: "email-smtp.us-east-1.amazonaws.com"
+          smtp-user: "xxxxxxxxxxxxxxxxxxxxxx"
+          smtp-password: 'xxxxxxxxxxxxxxxxxxxxxx'
+          smtp-port: 587
+
+networks: (( merge ))
