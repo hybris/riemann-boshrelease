@@ -42,3 +42,5 @@ jobs:
           smtp-port: 587
 
 networks: (( merge ))
+
+properties: {}
