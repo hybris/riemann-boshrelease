@@ -47,6 +47,8 @@ properties:
   riemann.graphite.threadpool.queue:
     description: "The queue size for Riemann ThreadPool Service"
     default: 10000
+  riemann.mailer.to:
+    description: "Mail to address"
   riemann.mailer.from:
     description: "Mail from address"
   riemann.mailer.smtp-server:

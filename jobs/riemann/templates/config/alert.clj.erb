@@ -13,11 +13,8 @@
     )
   )
 <% else %>
-  (where (and (or (state "warning") (state "critical") (state "blocker")) (not (service #"bosh_test*")) (not (state "expired")))
-    (where (host #".*framefrog.*") tell-framefrog )
-    (where (host #".*predictor.*") tell-predictor )
-    (where (host #".*wombats.*") tell-wombats )
-    tell-idefix
+  (where (and (or (state "warning") (state "critical") (state "blocker")) (not (state "expired")))
+    sendAlert
   )
 <% end %>
 )

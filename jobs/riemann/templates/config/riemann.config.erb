@@ -4,7 +4,7 @@
 (include "mailer.clj")
 <% if_p("riemann.victorops.apikey") do %>(include "victorops.clj")<% end %>
 (include "alert.clj")
-(include "graphite.clj")
+<% if_p("riemann.graphite.host") do %>(include "graphite.clj")<% end %>
 <% if_p("riemann.influxdb.host") do %>(include "influxdb.clj")<% end %>
 (include "cf.clj")
 (include "bosh.clj")
@@ -25,7 +25,8 @@
 (periodically-expire 30)
 
 (let [index (default :ttl 60 (index))
-      graph (async-queue! :graphite {:max-pool-size <%= p("riemann.graphite.threadpool.maxsize") %>, :queue-size <%= p("riemann.graphite.threadpool.queue") %>} graph)]
+     <% if_p("riemann.graphite.host") do %>graph (async-queue! :graphite {:max-pool-size <%= p("riemann.graphite.threadpool.maxsize") %>, :queue-size <%= p("riemann.graphite.threadpool.queue") %>} graph)<% end %>
+  ]
 
   (streams index)
 
@@ -39,33 +40,22 @@
     )
   )
 
+  <% if_p("riemann.graphite.host") do %>
   (streams
     ; Calculate an overall rate of events.
     (with {:metric 1 :host "riemann" :state "normal" :service "riemann events_sec"}
       (rate 5 index graph)
     )
   )
+  <% end %>
 
   (include "mongodb.clj")
   (include "framefrog.clj")
   (include "predictor.clj")
 
   (streams bosh-hm)
-  (streams graph)
-
-  <% if_p("riemann.influxdb.host") do %>
-  (streams
-    (fn [event]
-      (let [service (clojure.string/replace (:service event) " " ".")
-            series (if (:host event) (format "%s.%s" (:host event) service) (format "%s" service))]
-        (influx series {:time  (:time event) :value (:metric event)})
-      )
-    )
-  )
-  <% end %>
-  
-    (streams log-dispatcher)
-  (streams graph)
+  (streams log-dispatcher)
+  <% if_p("riemann.graphite.host") do %>(streams graph)<% end %>
 
   <% if_p("riemann.influxdb.host") do %>
   (streams

@@ -19,7 +19,7 @@
         :accept :json
         :throw-entire-message? true})
     (catch java.net.ConnectException ex
-      (tell-idefix event))))
+      (sendAlert event))))
 
 (defn- format-event
   "Formats an event for VictorOps"

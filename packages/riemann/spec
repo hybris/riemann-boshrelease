@@ -5,4 +5,4 @@ dependencies:
 - java
 
 files:
-- riemann/riemann-0.2.8.tar.bz2
+- riemann/riemann-0.2.10.tar.bz2

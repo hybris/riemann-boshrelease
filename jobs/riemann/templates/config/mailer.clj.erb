@@ -10,7 +10,4 @@
   )
 )
 
-(def tell-idefix    (throttle 5 3600  (email "team-idefix@sap.com" "michael.stephan@sap.com")))
-(def tell-framefrog (throttle 5 3600  (email "team-framefrog@sap.com")))
-(def tell-predictor (throttle 5 3600  (email "team-predictor@sap.com")))
-(def tell-wombats   (throttle 5 3600  (email "team-wombats@sap.com")))
+(def sendAlert (throttle 5 3600  (email "<%= p('riemann.mailer.to') %>")))
