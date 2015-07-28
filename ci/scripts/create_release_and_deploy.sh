@@ -23,11 +23,6 @@ _bosh() {
 set -e
 git submodule update --init --recursive --force
 
-whoami
-env
-
-
-
 _bosh delete deployment ${bosh_deployment_name} --force || echo "Continuing..."
 _bosh create release
 set +e

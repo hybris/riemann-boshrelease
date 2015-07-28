@@ -46,7 +46,7 @@ jobs:
       trigger: true
     - get: version
       trigger: false
-      params: {bump: patch, pre: rc}
+      params: {bump: minor, pre: rc}
   - put: version
     params: {file: version/number}
 
@@ -140,14 +140,14 @@ resources:
   type: git
   source:
     uri: git@github.com:hybris/riemann-boshrelease.git
-    branch: ci
+    branch: master
     private_key: {{github-private-key}}
 
 - name: git-riemann-boshrelease-release-changes
   type: git
   source:
     uri: https://github.com/hybris/riemann-boshrelease.git
-    branch: ci
+    branch: master
     paths:
       - src/**/*
       - jobs/**/*
@@ -160,7 +160,7 @@ resources:
 - name: github-final-release
   type: github-release
   source:
-    user: cloudfoundry-community
+    user: hybris
     repository: riemann-boshrelease
     access_token: {{github-access-token}}
 
