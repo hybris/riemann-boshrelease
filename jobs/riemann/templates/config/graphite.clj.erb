@@ -1,9 +1,11 @@
 (def graph
+  <% if_p("riemann.graphite.host", "riemann.graphite.port", "riemann.graphite.pool") do |host, port, pool| %>
   (
     graphite {
-      :host "<%= p('riemann.graphite.host') %>",
-      :port <%= p('riemann.graphite.port') %>,
-      :pool-size <%= p("riemann.graphite.pool") %>
+      :host "<%= host %>",
+      :port <%= port %>,
+      :pool-size <%= pool %>
     }
   )
+  <% end %>
 )
