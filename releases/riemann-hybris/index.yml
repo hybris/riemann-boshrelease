@@ -66,6 +66,4 @@ builds:
     version: '8.11'
   ca11cfc1-013b-47ae-b69e-268960f3683d:
     version: '8.12'
-  4707e61c-d4f1-42fc-87be-3608d16f4fc1:
-    version: 8.13.0
 format-version: '2'
