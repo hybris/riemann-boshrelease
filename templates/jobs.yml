@@ -20,26 +20,7 @@ jobs:
     properties:
       riemann:
         cf:
-          name: "cf1"
-        java:
-          xms: 10240M
-          xmx: 10240M
-        graphite:
-          host: "graphite.cf1.hybris.com"
-          pool: 100
-          threadpool:
-            queue: 10000
-            maxsize: 100
-        victorops:
-          apikey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-          apiendpoint: foobar
-          routingkey: "idefix"
-        mailer:
-          from: "riemann@cf1.hybris.com"
-          smtp-server: "email-smtp.us-east-1.amazonaws.com"
-          smtp-user: "xxxxxxxxxxxxxxxxxxxxxx"
-          smtp-password: 'xxxxxxxxxxxxxxxxxxxxxx'
-          smtp-port: 587
+          name: "cf-test"
 
 networks: (( merge ))
 
