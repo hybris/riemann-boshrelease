@@ -118,13 +118,13 @@ jobs:
     - put: version
       params: {file: version/number}
     - put: final-release
-      params: {from: create-final-release/riemann-boshrelease/releases/riemann-hybris/riemann-(.*).tgz}
+      params: {from: create-final-release/riemann-boshrelease/releases/riemann-hybris/riemann-hybris-(.*).tgz}
     - put: github-final-release
       params:
         name: create-final-release/riemann-boshrelease/release/name
         tag: create-final-release/riemann-boshrelease/release/tag
         body: create-final-release/riemann-boshrelease/release/notes.md
-        globs: [create-final-release/riemann-boshrelease/releases/riemann-hybris/riemann-*.tgz]
+        globs: [create-final-release/riemann-boshrelease/releases/riemann-hybris/riemann-hybris-*.tgz]
 
 resources:
 - name: version
@@ -168,6 +168,6 @@ resources:
   type: s3
   source:
     bucket: {{pipeline-aws-bucket}}
-    regexp: riemann-(.*).tgz
+    regexp: riemann-hybris-(.*).tgz
     access_key_id: {{pipeline-aws-access-key-id}}
     secret_access_key: {{pipeline-aws-secret-access-key}}
