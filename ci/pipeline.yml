@@ -1,0 +1,173 @@
+groups:
+- name: build
+  jobs:
+  - testflight
+  - rc
+  - shipit
+- name: version
+  jobs:
+  - patch
+  - minor
+  - major
+
+jobs:
+- name: testflight
+  public: true
+  serial: true
+  plan:
+  - do:
+    - aggregate:
+      - get: riemann-boshrelease
+        resource: git-riemann-boshrelease
+      - get: git-riemann-boshrelease-release-changes
+        trigger: true
+    - task: create-release-and-deploy
+      config:
+        platform: linux
+        image: {{docker-hub-task-image}}
+        inputs:
+        - {name: riemann-boshrelease}
+        run:
+          path: ./riemann-boshrelease/ci/scripts/create_release_and_deploy.sh
+          args: []
+        params:
+          bosh_target: {{bosh-lite-build-target}}
+          bosh_username: {{bosh-lite-build-username}}
+          bosh_password: {{bosh-lite-build-password}}
+          bosh_deployment_name: {{bosh-lite-build-deployment-name}}
+
+- name: rc
+  public: true
+  plan:
+  - aggregate:
+    - get: boshrelease
+      resource: git-riemann-boshrelease
+      passed: [testflight]
+      trigger: true
+    - get: version
+      trigger: false
+      params: {bump: patch, pre: rc}
+  - put: version
+    params: {file: version/number}
+
+- name: patch
+  public: true
+  plan:
+  - aggregate:
+    - get: version
+      trigger: false
+      params: {bump: patch}
+  - put: version
+    params: {file: version/number}
+
+- name: minor
+  public: true
+  plan:
+  - aggregate:
+    - get: version
+      trigger: false
+      params: {bump: minor}
+  - put: version
+    params: {file: version/number}
+
+- name: major
+  public: true
+  plan:
+  - aggregate:
+    - get: version
+      trigger: false
+      params: {bump: major}
+  - put: version
+    params: {file: version/number}
+
+- name: shipit
+  public: true
+  serial: true
+  plan:
+  - aggregate:
+    - get: version
+      passed: [rc]
+      params: {bump: final}
+    - get: boshrelease
+      resource: git-riemann-boshrelease
+      passed: [rc]
+  - task: create-final-release
+    config:
+      platform: linux
+      image: {{docker-hub-task-image}}
+      inputs:
+      - {name: boshrelease, path: riemann-boshrelease}
+      - {name: version}
+      run:
+        path: ./riemann-boshrelease/ci/scripts/shipit.sh
+        args: []
+      params:
+        release_name: "Riemann BOSH Release"
+        bosh_target: {{bosh-lite-build-target}}
+        bosh_username: {{bosh-lite-build-username}}
+        bosh_password: {{bosh-lite-build-password}}
+        bosh_deployment_name: {{bosh-lite-build-deployment-name}}
+        aws_access_key_id: {{pipeline-aws-access-key-id}}
+        aws_secret_access_key: {{pipeline-aws-secret-access-key}}
+        promotion_branch: master
+  - put: git-riemann-boshrelease
+    params:
+      repository: create-final-release/riemann-boshrelease
+      rebase: true
+  - aggregate:
+    - put: version
+      params: {file: version/number}
+    - put: final-release
+      params: {from: create-final-release/riemann-boshrelease/releases/riemann/riemann-(.*).tgz}
+    - put: github-final-release
+      params:
+        name: create-final-release/riemann-boshrelease/release/name
+        tag: create-final-release/riemann-boshrelease/release/tag
+        body: create-final-release/riemann-boshrelease/release/notes.md
+        globs: [create-final-release/riemann-boshrelease/releases/riemann/riemann-*.tgz]
+
+resources:
+- name: version
+  type: semver
+  source:
+    key: current-version
+    bucket: {{pipeline-aws-bucket}}
+    access_key_id: {{pipeline-aws-access-key-id}}
+    secret_access_key: {{pipeline-aws-secret-access-key}}
+    initial_version: 8.12.0
+
+- name: git-riemann-boshrelease
+  type: git
+  source:
+    uri: git@github.com:hybris/riemann-boshrelease.git
+    branch: ci
+    private_key: {{github-private-key}}
+
+- name: git-riemann-boshrelease-release-changes
+  type: git
+  source:
+    uri: https://github.com/hybris/riemann-boshrelease.git
+    branch: ci
+    paths:
+      - src/**/*
+      - jobs/**/*
+      - packages/**/*
+      - config/blobs.yml
+      - .final_builds/**/*
+      - templates/**/*
+      - .gitmodules
+
+- name: github-final-release
+  type: github-release
+  source:
+    user: cloudfoundry-community
+    repository: riemann-boshrelease
+    access_token: {{github-access-token}}
+
+- name: final-release
+  type: s3
+  source:
+    bucket: {{pipeline-aws-bucket}}
+    regexp: riemann-(.*).tgz
+    access_key_id: {{pipeline-aws-access-key-id}}
+    secret_access_key: {{pipeline-aws-secret-access-key}}
