@@ -118,13 +118,13 @@ jobs:
     - put: version
       params: {file: version/number}
     - put: final-release
-      params: {from: create-final-release/riemann-boshrelease/releases/riemann/riemann-(.*).tgz}
+      params: {from: create-final-release/riemann-boshrelease/releases/riemann-hybris/riemann-(.*).tgz}
     - put: github-final-release
       params:
         name: create-final-release/riemann-boshrelease/release/name
         tag: create-final-release/riemann-boshrelease/release/tag
         body: create-final-release/riemann-boshrelease/release/notes.md
-        globs: [create-final-release/riemann-boshrelease/releases/riemann/riemann-*.tgz]
+        globs: [create-final-release/riemann-boshrelease/releases/riemann-hybris/riemann-*.tgz]
 
 resources:
 - name: version
