@@ -170,6 +170,6 @@ resources:
   type: s3
   source:
     bucket: {{boshrelease-aws-bucket}}
-    regexp: riemann-(.*).tgz
+    regexp: riemann-boshrelease/riemann-(.*).tgz
     access_key_id: {{boshrelease-aws-access-key-id}}
     secret_access_key: {{boshrelease-aws-secret-access-key}}
