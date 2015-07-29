@@ -1,0 +1,38 @@
+---
+packages:
+- name: java
+  version: !binary |-
+    MWRhYjI5NjE0YWJhNWRjZWMyYmMwM2MxZGQ3YzA2YWQyZTgwMzIxMg==
+  fingerprint: !binary |-
+    MWRhYjI5NjE0YWJhNWRjZWMyYmMwM2MxZGQ3YzA2YWQyZTgwMzIxMg==
+  sha1: !binary |-
+    ZDBlY2ZkY2U3OGNmN2ExOGVlNzZhYWQ2ZGVmNmFhZmE2NWIzN2U0Yg==
+  dependencies: []
+- name: riemann
+  version: !binary |-
+    NTlkN2U4N2M1YTAxNmRjNzQ5YTM2NDUxNGQ3MDdlOTA2ZWMwNjAwNg==
+  fingerprint: !binary |-
+    NTlkN2U4N2M1YTAxNmRjNzQ5YTM2NDUxNGQ3MDdlOTA2ZWMwNjAwNg==
+  sha1: !binary |-
+    OGEzMjk2MDljNDBhNDJlYmU1Yzc5MmZkMzczZDZiYzdiYWMzZTY2Yg==
+  dependencies:
+  - java
+jobs:
+- name: riemann
+  version: !binary |-
+    YzEwMjE1NWU2ZWY1NWFmMWQxOTIxMjk5ZDMwMmVkZDk5NGMzZThhZA==
+  fingerprint: !binary |-
+    YzEwMjE1NWU2ZWY1NWFmMWQxOTIxMjk5ZDMwMmVkZDk5NGMzZThhZA==
+  sha1: !binary |-
+    MDkxMDU2MWEwYzk4ZWM4NzZlMDVhMzI3YjIwZGJlNjU3NzU0YmRlZA==
+license:
+  version: !binary |-
+    NTY5YTQ4MTY2M2Y5NWIxMGNiODAzNTM5YmE2MWE4YzI0YTg4MTQ2Mw==
+  fingerprint: !binary |-
+    NTY5YTQ4MTY2M2Y5NWIxMGNiODAzNTM5YmE2MWE4YzI0YTg4MTQ2Mw==
+  sha1: !binary |-
+    MGRjMjQ2MTFjMTBlMmQyMzNmYzY5M2JmNThlOTAxMWU0M2FmYjNiZg==
+commit_hash: f90ee8ee
+uncommitted_changes: true
+name: riemann
+version: 0.1.0
