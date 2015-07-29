@@ -1,6 +1,6 @@
 ---
-final_name: riemann-hybris
+final_name: riemann
 blobstore:
   provider: s3
   options:
-    bucket_name: blobs.hybris.com/riemann
+    bucket_name: blobs-yaas-idefix/riemann-boshrelease

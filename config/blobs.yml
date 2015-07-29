@@ -1,9 +1,9 @@
 ---
 java/openjdk-jre-trusty-1.8.0_45.tar.gz:
-  object_id: 7ff83fc3-8bc4-4cd8-ad37-8b774004eb53
+  object_id: d3c946f2-2a74-4c56-9523-d0429dce72de
   sha: 6517390047b05bdb8dd02b3895378112207abda7
   size: 44988428
 riemann/riemann-0.2.10.tar.bz2:
-  object_id: 86d71dd0-976d-4964-9c60-8a5cefcc42b9
+  object_id: 68c106fc-9d2e-4d06-a2e4-2972c431e620
   sha: 3e80ea180d1d103c6f7e781f0a439405c81ec5c5
   size: 41165533

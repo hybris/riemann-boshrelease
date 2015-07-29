@@ -15,7 +15,7 @@ resources:
   type: git
   source:
     uri: https://github.com/hybris/riemann-boshrelease.git
-    branch: ci
+    branch: master
     paths: [ci/ci_image/*]
 
 - name: docker-image
