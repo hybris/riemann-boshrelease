@@ -120,7 +120,7 @@ jobs:
     - put: final-release
       params:
         from: create-final-release/riemann-boshrelease/releases/riemann/riemann-(.*).tgz
-        to: {{boshrelease-aws-bucket-folder}}/
+        to: redis-boshrelease/
     - put: github-final-release
       params:
         name: create-final-release/riemann-boshrelease/release/name
