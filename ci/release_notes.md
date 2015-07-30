@@ -1,1 +1,3 @@
-## Initial release
+## Release Notes
+
+* Removed log-dispatcher check
