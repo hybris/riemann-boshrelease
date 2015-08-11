@@ -32,65 +32,65 @@ networks:
   subnets:
   - cloud_properties:
       name: random
-    range: 10.244.27.0/30
+    range: 10.244.26.0/30
     reserved:
-    - 10.244.27.1
+    - 10.244.26.1
     static:
-    - 10.244.27.2
+    - 10.244.26.2
 
   - cloud_properties:
       name: random
-    range: 10.244.27.4/30
+    range: 10.244.26.4/30
     reserved:
-    - 10.244.27.5
+    - 10.244.26.5
     static: []
   - cloud_properties:
       name: random
-    range: 10.244.27.8/30
+    range: 10.244.26.8/30
     reserved:
-    - 10.244.27.9
+    - 10.244.26.9
     static: []
   - cloud_properties:
       name: random
-    range: 10.244.27.12/30
+    range: 10.244.26.12/30
     reserved:
-    - 10.244.27.13
+    - 10.244.26.13
     static: []
   - cloud_properties:
       name: random
-    range: 10.244.27.16/30
+    range: 10.244.26.16/30
     reserved:
-    - 10.244.27.17
+    - 10.244.26.17
     static: []
 
   # Bonus double-sized network required due to BOSH oddity
   - cloud_properties:
       name: random
-    range: 10.244.27.20/30
+    range: 10.244.26.20/30
     reserved:
-    - 10.244.27.21
+    - 10.244.26.21
     static: []
   - cloud_properties:
       name: random
-    range: 10.244.27.24/30
+    range: 10.244.26.24/30
     reserved:
-    - 10.244.27.25
+    - 10.244.26.25
     static: []
   - cloud_properties:
       name: random
-    range: 10.244.27.28/30
+    range: 10.244.26.28/30
     reserved:
-    - 10.244.27.29
+    - 10.244.26.29
     static: []
   - cloud_properties:
       name: random
-    range: 10.244.27.32/30
+    range: 10.244.26.32/30
     reserved:
-    - 10.244.27.33
+    - 10.244.26.33
     static: []
   - cloud_properties:
       name: random
-    range: 10.244.27.36/30
+    range: 10.244.26.36/30
     reserved:
-    - 10.244.27.37
+    - 10.244.26.37
     static: []
