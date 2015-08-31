@@ -1,0 +1,33 @@
+---
+name: riemann-emitter
+
+templates:
+  bin/riemann-health_ctl.erb: bin/riemann-health_ctl
+  bin/riemann-rds_ctl.erb: bin/riemann-rds_ctl
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
+
+packages:
+- ruby-2.1
+- riemann-tools
+
+properties:
+  riemann_emitter.host:
+    description: "Address of the Riemann server to report to."
+    default: riemann.service.dc1.consul
+
+  riemann_emitter.port:
+    description: "Port of the Riemann server to connect to."
+    default: 5555
+
+  riemann_emitter.rds.instance_name:
+    description: "Name of the RDS instance to emit metrics for."
+
+  riemann_emitter.rds.region:
+    description: "Region in which the RDS instance lives."
+    default: us-east-1
+
+  riemann_emitter.rds.access_key_id:
+    description: "AWS access key ID to use when collecting CloudWatch metrics."
+
+  riemann_emitter.rds.secret_access_key:
+    description: "AWS secret access key to use when collecting CloudWatch metrics."
