@@ -7,7 +7,7 @@
 
 (streams
   (where (and (not (state "expired")) (not (nil? metric)))
-    (where (and (host #".*predictor.*") (service #"RATE.*nonFatal.*"))
+    (where (and (host #".*malones.*") (service #"RATE.*nonFatal.*"))
       (split
         (> metric 0) (with :state "warning"  alert)
                      (with :state "ok" alert)
@@ -15,9 +15,9 @@
     )
 
 
-    ; ########### Uncomment to log events with predictor in hostname  ###########
-    ;(where (host #".*predictor.*")
-    ;  #(info "predictor event: " %))
+    ; ########### Uncomment to log events with malones in hostname  ###########
+    ;(where (host #".*malones.*")
+    ;  #(info "malones event: " %))
   )
 )
 
