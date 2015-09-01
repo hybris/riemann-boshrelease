@@ -14,7 +14,7 @@ templates:
    config/riemann.config.erb: config/riemann.config
    config/victorops.clj.erb: config/victorops.clj
    config/framefrog.clj.erb: config/framefrog.clj
-   config/predictor.clj.erb: config/predictor.clj
+   config/malones.clj.erb: config/malones.clj
    config/influxdb.clj.erb: config/influxdb.clj
    config/bosh.clj.erb: config/bosh.clj
 
