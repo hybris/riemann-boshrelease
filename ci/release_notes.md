@@ -1,3 +1,3 @@
 ## Release Notes
 
-* Removed log-dispatcher check
+* Renamed predictor to malones
