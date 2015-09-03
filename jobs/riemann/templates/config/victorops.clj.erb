@@ -10,6 +10,7 @@
 (defn- post
   "POST to the VictorOps REST API."
   [request event api-key routing-key]
+  ;(println (str "REQUEST: " request "\nEVENT: " event))
   (try
     (client/post (str event-url "/" api-key "/" routing-key)
       {:body (json/generate-string request)
