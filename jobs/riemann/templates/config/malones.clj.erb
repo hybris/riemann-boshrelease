@@ -9,11 +9,11 @@
   (where (and (not (state "expired")) (not (nil? metric)))
     (where (and (host #".*malones.*") (service #"RATE.*nonFatal.*"))
       (split
-        (> metric 0) (with :state "warning"  alert)
+        (> metric 1) (with :state "critical"  alert)
+        (> metric 0.1) (with :state "warning"  alert)
                      (with :state "ok" alert)
       )
     )
-
 
     ; ########### Uncomment to log events with malones in hostname  ###########
     ;(where (host #".*malones.*")
