@@ -43,8 +43,10 @@
   (include "mongodb.clj")
   (include "framefrog.clj")
   (include "malones.clj")
+  (include "cassandra.clj")
 
   (streams bosh-hm)
+
   <% if_p("riemann.graphite.host") do %>(streams graph)<% end %>
 
   <% if_p("riemann.influxdb.host") do %>
@@ -63,6 +65,7 @@
     (where
       (and
         (not (service #"mongodb.*"))
+        (not (service #"cassandra.*"))
         (not (service #".*ReplicaSet.TenantCountCapacityReached.*"))
         (not (service #"<%= p('riemann.cf.name') %>.*"))
         (not (and (host #".*malones.*") (service #"RATE.*nonFatal.*")))
