@@ -17,6 +17,7 @@ templates:
    config/malones.clj.erb: config/malones.clj
    config/influxdb.clj.erb: config/influxdb.clj
    config/bosh.clj.erb: config/bosh.clj
+   config/cassandra.clj.erb: config/cassandra.clj
 
 packages:
   - java
