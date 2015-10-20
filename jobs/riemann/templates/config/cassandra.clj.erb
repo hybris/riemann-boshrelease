@@ -1,0 +1,35 @@
+(streams
+  (where
+    (and (not (state "expired")) (not (nil? metric)))
+
+    ; ########### Heap Used MB ###########
+    (where (service "cassandra.heap_used_mb")
+        (let [maxheap 1858]
+          (split
+                (> metric (* 0.95 maxheap)) (with :state "blocker"  alert)
+                (> metric (* 0.9 maxheap)) (with :state "critical" alert)
+                (> metric (* 0.8 maxheap)) (with :state "warning"  alert)
+                                           (with :state "ok" alert)
+          )
+        )
+    )
+
+    ; ########### Recent timeouts ###########
+    (where (service "cassandra.recent_timeouts")
+         (split
+                (> metric 1) (with :state "warning"  alert)
+                             (with :state "ok" alert)
+         )
+
+    )
+
+    ; ########### Exception count ###########
+    (where (service "cassandra.exception_count")
+         (split
+                 (> metric 1) (with :state "warning"  alert)
+                              (with :state "ok" alert)
+         )
+
+    )
+
+))
