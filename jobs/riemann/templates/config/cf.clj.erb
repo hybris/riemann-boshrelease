@@ -29,6 +29,22 @@
   )
 )
 
+(def cf-stager
+  "Check available stagers"
+  (where (service #"<%= p('riemann.cf.name') %>.DEA.*.*.reservable_stagers")
+    (coalesce
+      (smap folds/sum*
+        (where (>= metric 30)
+          (with :state "ok"       alert)
+        (else
+          (with :state "critical" alert))
+        )
+      )
+    )
+  )
+)
+
+
 (def cf-router
   "Router Health Check"
 
