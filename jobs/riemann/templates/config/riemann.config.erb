@@ -49,7 +49,7 @@
 
   (streams bosh-hm)
 
-  <% if_p("riemann.graphite.host") do %>(streams graph)<% end %>
+  <% if_p("riemann.graphite.host") do %>(streams (where (number? :metric) graph))<% end %>
 
   <% if_p("riemann.influxdb.host") do %>
   (streams
