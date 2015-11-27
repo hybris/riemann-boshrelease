@@ -1,6 +1,11 @@
 ; -*- mode: clojure; -*-
 ; vim: filetype=clojure
-
+<%
+def server_info(type)
+  serverlist = p("riemann.listener.list", [])
+  return serverlist.find{|k| k['name'] == type}
+end
+%>
 ; plugins includes
 (include "alert.clj")
 <% if_p("riemann.victorops.apikey") do %>(include "victorops.clj")<% end %>
@@ -12,16 +17,19 @@
 ; ########### Configurations #############
 (logging/init {:console true})
 
-(let [host "<%= p('riemann.listen_addr') %>"]
-  (tcp-server {:host host})
-  (udp-server {:host host})
-  (ws-server  {:host host})
-  (graphite-server
+(let [host "<%= p('riemann.listener.addr') %>"]
+  <% unless server_info('tcp').nil? %>(tcp-server {:host host :port <%= server_info('tcp')['port'] %>})<% end %>
+  <% unless server_info('udp').nil? %>(udp-server {:host host :port <%= server_info('udp')['port'] %>})<% end %>
+  <% unless server_info('ws').nil? %>(ws-server {:host host :port <%= server_info('ws')['port'] %>})<% end %>
+  <% unless server_info('opentsdb').nil? %>(opentsdb-server {:host host :port <%= server_info('opentsdb')['port'] %>})<% end %>
+  <% unless server_info('graphite').nil? %>(graphite-server
     :host host
+    :port <%= server_info('graphite')['port'] %>
     :parser-fn
       (fn [{:keys [service] :as event}]
         (if-let [[host metricname] (clojure.string/split service #"\." 2)]
-          {:host host :service metricname :metric (:metric event) :time (:time event) :ttl <%= p("riemann.graphite_server_index_ttl") %>}))))
+          {:host host :service metricname :metric (:metric event) :time (:time event) :ttl <%= server_info('graphite')['ttl'] %>})))<% end %>
+)
 
 ; Expire old events from the index
 (periodically-expire <%= p("riemann.periodically_expire") %>)
@@ -33,7 +41,7 @@
   ]
 
   (streams index)
-  
+
   <% if_p("riemann.graphite.host") do %>
   (streams
     (with {:metric 1 :host hostname :state "normal" :service "riemann events_sec"} (rate 10 index graph))
