@@ -6,18 +6,11 @@ templates:
    data/properties.sh.erb: data/properties.sh
    helpers/ctl_setup.sh: helpers/ctl_setup.sh
    helpers/ctl_utils.sh: helpers/ctl_utils.sh
-   config/alert.clj.erb: config/alert.clj
-   config/cf.clj.erb: config/cf.clj
-   config/graphite.clj.erb: config/graphite.clj
-   config/mailer.clj.erb: config/mailer.clj
-   config/mongodb.clj.erb: config/mongodb.clj
    config/riemann.config.erb: config/riemann.config
-   config/victorops.clj.erb: config/victorops.clj
-   config/framefrog.clj.erb: config/framefrog.clj
-   config/malones.clj.erb: config/malones.clj
+   config/alert.clj.erb: config/alert.clj
+   config/graphite.clj.erb: config/graphite.clj
    config/influxdb.clj.erb: config/influxdb.clj
-   config/bosh.clj.erb: config/bosh.clj
-   config/cassandra.clj.erb: config/cassandra.clj
+   config/victorops.clj.erb: config/victorops.clj
 
 packages:
   - java
@@ -28,11 +21,22 @@ properties:
     description: "Specifies the initial size of the memory allocation pool"
   riemann.java.xmx:
     description: "Specifies the maximum size of the memory allocation pool"
-  riemann.cf.name:
-    description: "Name of the CF Environment"
-  riemann.cf.memory_ratio_alert:
-    description: "CF available memory % before alerting (between 0 and 1)"
-    default: 0.2
+  riemann.custom_rules:
+    description: "Custom alert rules"
+    default: ""
+  riemann.listen_addr:
+    description: ""
+    default: "0.0.0.0"
+  riemann.periodically_expire:
+    description: ""
+    default: 30
+  riemann.index_ttl:
+    description: ""
+    default: 60
+  riemann.graphite_server_index_ttl:
+    description: ""
+    default: 60
+
   riemann.graphite.host:
     description: "Graphite hostname"
   riemann.graphite.port:
@@ -47,6 +51,7 @@ properties:
   riemann.graphite.threadpool.queue:
     description: "The queue size for Riemann ThreadPool Service"
     default: 10000
+
   riemann.mailer.to:
     description: "Mail to address"
   riemann.mailer.from:
@@ -59,6 +64,7 @@ properties:
     description: "SMTP User"
   riemann.mailer.smtp-password:
     description: "SMTP Password"
+
   riemann.victorops.apiendpoint:
     description: "VictorOps API URL endpoint"
     default: "https://alert.victorops.com/integrations/generic/20131114/alert"
@@ -70,14 +76,24 @@ properties:
   riemann.victorops.stable-time:
     description: "Number of seconds an event state must remains the same before alerting"
     default: 0
+
   riemann.influxdb.host:
     description: "InfluxDB host"
   riemann.influxdb.port:
     description: "InfluxDB port"
     default: 8086
+  riemann.influxdb.version:
+    description: "InfluxDB version"
+    default: 0.9
   riemann.influxdb.username:
     description: "InfluxDB database username"
   riemann.influxdb.password:
     description: "InfluxDB database password"
-  riemann.influxdb.db:
+  riemann.influxdb.database:
     description: "InfluxDB database"
+  riemann.influxdb.threadpool.maxsize:
+    description: "The maximum allowed number of threads for Riemann ThreadPool Service"
+    default: 100
+  riemann.influxdb.threadpool.queue:
+    description: "The queue size for Riemann ThreadPool Service"
+    default: 10000

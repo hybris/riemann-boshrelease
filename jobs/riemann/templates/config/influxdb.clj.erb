@@ -1,26 +1,24 @@
-(require 'capacitor.core)
-(require 'capacitor.async)
-(require 'clojure.core.async)
+(def special-fields
+  "A set of event fields in Riemann with special handling logic."
+  #{:host :service :time :metric :tags :ttl :description}
+)
 
-(defn make-async-influxdb-client [opts]
-  (let [client (capacitor.core/make-client opts) events-in (capacitor.async/make-chan) resp-out (capacitor.async/make-chan)]
-    (capacitor.async/run! events-in resp-out client 100 10000)
-    (fn [series payload]
-      (let [p (merge payload { :series series :time (* 1000 (:time payload)) ;; s → ms
-        })]
-        (clojure.core.async/put! events-in p)
-      )
+(def influx
+  <% if_p("riemann.influxdb.host") do %>
+  (fn [event]
+    (let [tag-fields (conj (set (remove special-fields (keys event))) :host)
+      influx-with-tags
+      (influxdb {
+        :version :<%= p("riemann.influxdb.version") %>
+        :host "<%= p('riemann.influxdb.host') %>"
+        :port <%= p("riemann.influxdb.port") %>
+        :db "<%= p("riemann.influxdb.database") %>"
+        :username "<%= p("riemann.influxdb.username") %>"
+        :password "<%= p("riemann.influxdb.password") %>"
+        :tag-fields tag-fields
+      })]
+      (influx-with-tags event)
     )
   )
+  <% end %>
 )
-
-<% if_p("riemann.influxdb.host") do %>
-(def influx (make-async-influxdb-client {
-    :host     "<%= p('riemann.influxdb.host') %>"
-    :port     <%= p('riemann.influxdb.port') %>
-    :username "<%= p('riemann.influxdb.username') %>"
-    :password "<%= p('riemann.influxdb.password') %>"
-    :db       "<%= p('riemann.influxdb.db') %>"
-  })
-)
-<% end %>

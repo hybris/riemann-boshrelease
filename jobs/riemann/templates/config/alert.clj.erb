@@ -1,20 +1,25 @@
-(def alert
-  "Send alerts to teams"
-<% if p("riemann.victorops.apikey", false) %>
-  (let [vo (victorops "<%= p("riemann.victorops.apikey") %>", "<%= p("riemann.victorops.routingkey") %>")]
-    (where (not (state "expired"))
-      (changed-state {:init "ok"}
-        (stable <%= p("riemann.victorops.stable-time") %> :state
-          (where (state "ok") (:recover vo))
-          (where (state "warning") (:warning vo))
-          (where (or (state "critical") (state "blocker")) (:trigger vo))
-        )
-      )
-    )
-  )
+<%
+from      = p('riemann.mailer.from', nil)
+to        = p('riemann.mailer.to', nil)
+host      = p('riemann.mailer.smtp-server', nil)
+port      = p('riemann.mailer.smtp-port', nil)
+user      = p('riemann.mailer.smtp-user', nil)
+password  = p('riemann.mailer.smtp-password', nil)
+%>
+
+<% if from && to && host && port && user && password %>
+(def email (mailer {:from "<%= from %>" :host "<%= host %>" :port <%= port %> :user "<%= user %>" :pass "<%= password %>"}))
+(def sendAlert (throttle 5 3600  (email "<%= to %>")))
 <% else %>
-  (where (and (or (state "warning") (state "critical") (state "blocker")) (not (state "expired")))
+(def sendAlert prn )
+<% end %>
+
+(def alert
+  (where
+    (and
+      (or (state "warning") (state "critical") (state "blocker"))
+      (not (state "expired"))
+    )
     sendAlert
   )
-<% end %>
 )
