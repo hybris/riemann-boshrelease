@@ -18,6 +18,8 @@ packages:
 
 properties:
   # Riemann configurations
+  riemann.override_hostname:
+    description: "Override server hostname"
   riemann.java.xms:
     description: "Specifies the initial size of the memory allocation pool"
   riemann.java.xmx:

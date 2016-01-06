@@ -19,6 +19,7 @@ case $1 in
 
     # increasing the open files limits
     ulimit -n 64000
+    <% if_p("riemann.override_hostname") do %>export HOSTNAME=<%= p("riemann.override_hostname") %><% end %>
 
     exec chpst -u vcap:vcap java $JAVA_OPTS \
       -jar /var/vcap/packages/riemann/lib/riemann.jar start \

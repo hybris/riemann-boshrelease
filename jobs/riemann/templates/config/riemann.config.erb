@@ -12,8 +12,6 @@ end
 <% if_p("riemann.graphite.host") do %>(include "graphite.clj")<% end %>
 <% if_p("riemann.influxdb.host") do %>(include "influxdb.clj")<% end %>
 
-(def hostname (.getHostName (java.net.InetAddress/getLocalHost)))
-
 ; ########### Configurations #############
 (logging/init {:console true})
 
@@ -44,7 +42,7 @@ end
 
   <% if_p("riemann.graphite.host") do %>
   (streams
-    (with {:metric 1 :host hostname :state "normal" :service "riemann events_sec"} (rate 10 index graph))
+    (with {:metric 1 :host (riemann.common/localhost) :state "ok" :service "riemann events_sec"} (rate 10 index graph))
     (where (number? metric)
       graph
     )
@@ -53,7 +51,7 @@ end
 
   <% if_p("riemann.influxdb.host") do %>
   (streams
-    (with {:metric 1 :host hostname :state "normal" :service "riemann events_sec"} (rate 10 index influx))
+    (with {:metric 1 :host (riemann.common/localhost) :state "ok" :service "riemann events_sec"} (rate 10 index influx))
     (where (number? metric)
       influx
     )
