@@ -43,7 +43,7 @@ end
   <% if_p("riemann.graphite.host") do %>
   (streams
     (with {:metric 1 :host (riemann.common/localhost) :state "ok" :service "riemann events_sec"} (rate 10 index graph))
-    (where (and (number? metric) (< metric Float/MAX_VALUE))
+    (where (and (number? metric) (> metric (- Float/MAX_VALUE)) (< metric Float/MAX_VALUE))
       graph
     )
   )
@@ -52,7 +52,7 @@ end
   <% if_p("riemann.influxdb.host") do %>
   (streams
     (with {:metric 1 :host (riemann.common/localhost) :state "ok" :service "riemann events_sec"} (rate 10 index influx))
-    (where (and (number? metric) (< metric Float/MAX_VALUE))
+    (where (and (number? metric) (> metric (- Float/MAX_VALUE)) (< metric Float/MAX_VALUE))
       influx
     )
   )
