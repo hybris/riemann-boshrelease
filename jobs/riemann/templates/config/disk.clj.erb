@@ -1,0 +1,14 @@
+(info "Loading disk alerts")
+
+(defn disk-alerts [pd]
+  (info "Setting up disk alerts")
+  (where
+    (service #"^df.*percent_.*-used")
+      (pipe -
+        (splitp < metric
+          <%= p("riemann.disk.critical") %> (with :state "critical" -)
+          <%= p("riemann.disk.warn") %> (with :state "warn" -)
+             (with :state "ok" -))
+        (changed-state {:init "ok"} (where (state "ok") (:resolve pd)
+                                      (else (where (state "critical") (:trigger pd))))))))
+
