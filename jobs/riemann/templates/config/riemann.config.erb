@@ -1,62 +1,20 @@
-; -*- mode: clojure; -*-
-; vim: filetype=clojure
-<%
-def server_info(type)
-  serverlist = p("riemann.listener.list", [])
-  return serverlist.find{|k| k['name'] == type}
-end
-%>
-; plugins includes
-(include "alert.clj")
-<% if_p("riemann.victorops.apikey") do %>(include "victorops.clj")<% end %>
-<% if_p("riemann.graphite.host") do %>(include "graphite.clj")<% end %>
-<% if_p("riemann.influxdb.host") do %>(include "influxdb.clj")<% end %>
+;; -*- mode: clojure; -*-
+;; vim: filetype=clojure
 
-; ########### Configurations #############
-(logging/init {:console true})
+;; plugins includes
+(include "/var/vcap/jobs/riemann/include/expire.clj")
+(include "/var/vcap/jobs/riemann/include/interface.clj")
+(include "/var/vcap/jobs/riemann/include/logging.clj")
+(include "/var/vcap/jobs/riemann/include/pagerduty.clj")
+(include "/var/vcap/jobs/riemann/include/disk.clj")
+(include "/var/vcap/jobs/riemann/include/swap.clj")
+(include "/var/vcap/jobs/riemann/include/influxdb.clj")
 
-(let [host "<%= p('riemann.listener.addr') %>"]
-  <% unless server_info('tcp').nil? %>(tcp-server {:host host :port <%= server_info('tcp')['port'] %>})<% end %>
-  <% unless server_info('udp').nil? %>(udp-server {:host host :port <%= server_info('udp')['port'] %>})<% end %>
-  <% unless server_info('ws').nil? %>(ws-server {:host host :port <%= server_info('ws')['port'] %>})<% end %>
-  <% unless server_info('opentsdb').nil? %>(opentsdb-server {:host host :port <%= server_info('opentsdb')['port'] %>})<% end %>
-  <% unless server_info('graphite').nil? %>(graphite-server
-    :host host
-    :port <%= server_info('graphite')['port'] %>
-    :parser-fn
-      (fn [{:keys [service] :as event}]
-        (if-let [[host metricname] (clojure.string/split service #"\." 2)]
-          {:host host :service metricname :metric (:metric event) :time (:time event) :ttl <%= server_info('graphite')['ttl'] %>})))<% end %>
-)
-
-; Expire old events from the index
-(periodically-expire <%= p("riemann.periodically_expire") %>)
-
-(let [
-    index (default :ttl <%= p("riemann.index_ttl") %> (index))
-    <% if_p("riemann.graphite.host") do %>graph (async-queue! :graphite {:max-pool-size <%= p("riemann.graphite.threadpool.maxsize") %>, :queue-size <%= p("riemann.graphite.threadpool.queue") %>} graph)<% end %>
-    <% if_p("riemann.influxdb.host") do %>influx (async-queue! :influxdb {:max-pool-size <%= p("riemann.influxdb.threadpool.maxsize") %>, :queue-size <%= p("riemann.influxdb.threadpool.queue") %>} influx)<% end %>
-  ]
-
-  (streams index)
-
-  <% if_p("riemann.graphite.host") do %>
+(let [index (index)]
   (streams
-    (with {:metric 1 :host (riemann.common/localhost) :state "ok" :service "riemann events_sec"} (rate 10 index graph))
-    (where (and (number? metric) (> metric (- Float/MAX_VALUE)) (< metric Float/MAX_VALUE))
-      graph
-    )
-  )
-  <% end %>
-
-  <% if_p("riemann.influxdb.host") do %>
-  (streams
-    (with {:metric 1 :host (riemann.common/localhost) :state "ok" :service "riemann events_sec"} (rate 10 index influx))
-    (where (and (number? metric) (> metric (- Float/MAX_VALUE)) (< metric Float/MAX_VALUE))
-      influx
-    )
-  )
-  <% end %>
-
-  <%= p("riemann.custom_rules") %>
-)
+   (default :ttl 60
+     index
+     (disk-alerts pd)     
+     (swap-alerts pd)
+     (influx {:tags {"env" "<%= p("riemann.influxdb.database") %>"}})
+)))
