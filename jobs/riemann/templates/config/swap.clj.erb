@@ -5,7 +5,7 @@
     (where
       (service "swap/percent-used")
         (pipe -
-          (splitp > metric
+          (splitp < metric
             <%= p("riemann.swap.critical") %> (with :state "critical" -)
             <%= p("riemann.swap.warn") %> (with :state "warn" -)
                        (with :state "ok" -))
