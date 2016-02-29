@@ -11,5 +11,5 @@
                        (with :state "ok" -))
           (changed-state {:init "ok"} (where (state "ok") (:resolve pd)
                                         (else (where (state "critical") (:trigger pd)
-                                        (else (where (state "warn") #(warn "SWAP SPACE IS LOW" %))))))))))
+                                        (else (where (state "warn") #(warn "Swap space is low: " %))))))))))
 
