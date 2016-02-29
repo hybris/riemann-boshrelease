@@ -2,14 +2,14 @@
 riemann:
   pagerduty_api_key: asd90sad9ad9sd9aasd9as9d
   swap:
-    - critical: 1000000000
-    - warn: 5000000000
+    critical: 1000000000
+    warn: 5000000000
   disk:
-    - critical: 90
-    - warn: 85
+    critical: 90
+    warn: 85
   influxdb:
-    - host: 192.168.1.1
-    - username: user
-    - password: password
-    - port: 8086
-    - database: development
+    host: 192.168.1.1
+    username: user
+    password: password
+    port: 8086
+    database: development
