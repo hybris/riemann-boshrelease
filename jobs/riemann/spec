@@ -7,10 +7,13 @@ templates:
    helpers/ctl_setup.sh: helpers/ctl_setup.sh
    helpers/ctl_utils.sh: helpers/ctl_utils.sh
    config/riemann.config.erb: config/riemann.config
-   config/alert.clj.erb: config/alert.clj
-   config/graphite.clj.erb: config/graphite.clj
-   config/influxdb.clj.erb: config/influxdb.clj
-   config/victorops.clj.erb: config/victorops.clj
+   config/pagerduty.clj.erb: include/pagerduty.clj
+   config/expire.clj.erb: include/expire.clj
+   config/disk.clj.erb: include/disk.clj
+   config/swap.clj.erb: include/swap.clj
+   config/logging.clj.erb: include/logging.clj
+   config/interface.clj.erb: include/interface.clj
+   config/influxdb.clj.erb: include/influxdb.clj
 
 packages:
   - java
@@ -47,48 +50,25 @@ properties:
     default:
       - {name: "tcp", port: 5555}
 
-  # Email client configurations
-  riemann.mailer.to:
-    description: "Mail to address"
-  riemann.mailer.from:
-    description: "Mail from address"
-  riemann.mailer.smtp-server:
-    description: "SMTP Server"
-  riemann.mailer.smtp-port:
-    description: "SMTP Port"
-  riemann.mailer.smtp-user:
-    description: "SMTP User"
-  riemann.mailer.smtp-password:
-    description: "SMTP Password"
+  # Pagerduty client
+  riemann.pagerduty_api_key:
+    description: "Pagerduty API key"
 
-  # Victorops client configurations
-  riemann.victorops.apiendpoint:
-    description: "VictorOps API URL endpoint"
-    default: "https://alert.victorops.com/integrations/generic/20131114/alert"
-  riemann.victorops.apikey:
-    description: "VictorOps API key"
-  riemann.victorops.routingkey:
-    description: "VictorOps routing key"
-    default: "riemann"
-  riemann.victorops.stable-time:
-    description: "Number of seconds an event state must remains the same before alerting"
-    default: 0
+  # Disk alert settings
+  riemann.disk.critical:
+    description: "Amount of disk in bits remaining before alerting"
+    default: 1000000000
+  riemann.disk.warn:
+    description: "Amount of disk in bits remaining before warning"
+    default: 5000000000
 
-  # Graphite client configurations
-  riemann.graphite.host:
-    description: "Graphite hostname"
-  riemann.graphite.port:
-    description: "Graphite port"
-    default: 2003
-  riemann.graphite.pool:
-    description: "The number of connections to keep open to Graphite"
-    default: 100
-  riemann.graphite.threadpool.maxsize:
-    description: "Maximum allowed number of threads for Riemann ThreadPool Service to Graphite"
-    default: 100
-  riemann.graphite.threadpool.queue:
-    description: "Queue size for Riemann ThreadPool Service to Graphite"
-    default: 10000
+   # Swap alert settings
+  riemann.swap.critical:
+    description: "Amount of swap in bits remaining before alerting"
+    default: 1000000000
+  riemann.swap.warn:
+    description: "Amount of swap in bits remaining before warning"
+    default: 5000000000
 
   # InfluxDB client configurations
   riemann.influxdb.host:
@@ -105,9 +85,3 @@ properties:
     description: "InfluxDB database password"
   riemann.influxdb.database:
     description: "InfluxDB database name"
-  riemann.influxdb.threadpool.maxsize:
-    description: "The maximum allowed number of threads for Riemann ThreadPool Service to InfluxDB"
-    default: 100
-  riemann.influxdb.threadpool.queue:
-    description: "The queue size for Riemann ThreadPool Service to InfluxDB"
-    default: 10000
