@@ -15,17 +15,17 @@ groups:
 
 jobs:
 - name: build-task-image
-  public: true
+  public: false
   serial: true
   plan:
   - get: git-boshrelease
-    trigger: true
+    trigger: false
   - put: docker-image
     params:
       build: git-boshrelease/ci/ci_image
 
 - name: testflight
-  public: true
+  public: false
   serial: true
   plan:
   - do:
@@ -33,7 +33,7 @@ jobs:
       - get: riemann-boshrelease
         resource: git-riemann-boshrelease
       - get: git-riemann-boshrelease-release-changes
-        trigger: true
+        trigger: false
     - task: create-release-and-deploy
       config:
         platform: linux
@@ -50,7 +50,7 @@ jobs:
           bosh_deployment_name: {{bosh-lite-build-deployment-name}}
 
 - name: rc
-  public: true
+  public: false
   plan:
   - aggregate:
     - get: boshrelease
@@ -64,7 +64,7 @@ jobs:
     params: {file: version/number}
 
 - name: patch
-  public: true
+  public: false
   plan:
   - aggregate:
     - get: version
@@ -74,7 +74,7 @@ jobs:
     params: {file: version/number}
 
 - name: minor
-  public: true
+  public: false
   plan:
   - aggregate:
     - get: version
@@ -84,7 +84,7 @@ jobs:
     params: {file: version/number}
 
 - name: major
-  public: true
+  public: false
   plan:
   - aggregate:
     - get: version
@@ -94,7 +94,7 @@ jobs:
     params: {file: version/number}
 
 - name: shipit
-  public: true
+  public: false
   serial: true
   plan:
   - aggregate:
