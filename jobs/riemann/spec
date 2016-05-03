@@ -24,6 +24,9 @@ properties:
     description: "Specifies the initial size of the memory allocation pool"
   riemann.java.xmx:
     description: "Specifies the maximum size of the memory allocation pool"
+  riemann.java.enable_netty_epoll:
+    description: "Enable netty epoll native integration"
+    default: false
   riemann.custom_rules:
     description: "Custom alert rules"
     default: ""

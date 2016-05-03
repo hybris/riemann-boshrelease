@@ -13,6 +13,9 @@ JAVA_OPTS="-server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+CMSParallelRema
 <% if_p("riemann.java.xms") do %>JAVA_OPTS="$JAVA_OPTS -Xms<%= p("riemann.java.xms") %>"<% end %>
 <% if_p("riemann.java.xmx") do %>JAVA_OPTS="$JAVA_OPTS -Xmx<%= p("riemann.java.xmx") %>"<% end %>
 
+# https://github.com/riemann/riemann/blob/0.2.10/src/riemann/transport/tcp.clj#L79-L85
+JAVA_OPTS="$JAVA_OPTS -Dnetty.epoll.enabled=<%= p("riemann.java.enable_netty_epoll") %>"
+
 case $1 in
   start)
     pid_guard $PIDFILE $JOB_NAME
