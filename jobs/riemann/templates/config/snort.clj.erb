@@ -1,0 +1,9 @@
+(info "Loading snort alerts")
+
+(defn snort-alerts [pd]
+  (info "Setting up snort alerts")
+
+  (where
+    (and (service "snort") (state "critical"))
+    (:trigger pd))
+)
