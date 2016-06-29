@@ -10,6 +10,7 @@ templates:
    config/pagerduty.clj.erb: include/pagerduty.clj
    config/expire.clj.erb: include/expire.clj
    config/clamav.clj.erb: include/clamav.clj
+   config/snort.clj.erb: include/snort.clj
    config/disk.clj.erb: include/disk.clj
    config/swap.clj.erb: include/swap.clj
    config/logging.clj.erb: include/logging.clj
