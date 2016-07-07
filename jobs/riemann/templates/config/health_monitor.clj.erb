@@ -1,0 +1,14 @@
+(info "Loading health monitor alerts")
+
+(defn hm-alerts [pd]
+  (info "Setting up health monitor alerts")
+
+  (where
+    (service "bosh.hm")
+    (changed-state {:init "ok"}
+      (where
+        (state "ok") (:resolve pd)
+          (else (where (state "critical") (:trigger pd)))
+          (else (where (state "warn") #(warn %))))))
+
+)
