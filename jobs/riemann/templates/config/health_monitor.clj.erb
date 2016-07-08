@@ -4,11 +4,6 @@
   (info "Setting up health monitor alerts")
 
   (where
-    (service "bosh.hm")
-    (changed-state {:init "ok"}
-      (where
-        (state "ok") (:resolve pd)
-          (else (where (state "critical") (:trigger pd)))
-          (else (where (state "warn") #(warn %))))))
-
+    (and (service "bosh.hm") (state "alert"))
+    (:trigger pd))
 )
