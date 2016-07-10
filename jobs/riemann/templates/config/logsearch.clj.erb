@@ -1,0 +1,31 @@
+(info "Loading logsearch alerts")
+
+(defn logsearch-alerts [pd]
+  (info "Setting up logsearch alerts")
+
+  <% if_p("riemann.logsearch.platform_logs_threshold") do %>
+    (where
+      (and
+        (service "logsearch.health.platform")
+        (state "critical")
+        (<= metric <%= p("riemann.logsearch.platform_logs_threshold") %>))
+      (:trigger pd))
+
+    (where
+      (and (service "logsearch.health.platform") (state "expired"))
+      (:trigger pd))
+  <% end %>
+
+  <% if_p("riemann.logsearch.app_logs_threshold") do %>
+    (where
+      (and
+        (service "logsearch.health.app")
+        (state "critical")
+        (<= metric <%= p("riemann.logsearch.app_logs_threshold") %>))
+      (:trigger pd))
+
+    (where
+      (and (service "logsearch.health.app") (state "expired"))
+      (:trigger pd))
+  <% end %>
+)
