@@ -7,3 +7,19 @@ riemann/riemann-0.2.10.tar.bz2:
   object_id: 6f08b7f6-e668-4e1b-8d0a-ee3ea785323e
   sha: 3e80ea180d1d103c6f7e781f0a439405c81ec5c5
   size: 41165533
+ruby-2.1/bundler-1.9.4.gem:
+  object_id: 16cd5566-93ed-4741-b4f7-dab122d0de58
+  sha: ea3f17a76a8249049b5589c9b5421af72189babc
+  size: 244224
+ruby-2.1/ruby-2.1.7.tar.gz:
+  object_id: caee1850-3ea9-4eda-aa99-41aaf395a0d5
+  sha: e2e195a4a58133e3ad33b955c829bb536fa3c075
+  size: 15151458
+ruby-2.1/rubygems-2.4.8.tgz:
+  object_id: d5298ab0-1ae8-406e-950d-5b219b7b8257
+  sha: 0db6b2f1cdd2267fe19f1f875057c2f2ce9f5696
+  size: 447712
+ruby-2.1/yaml-0.1.6.tar.gz:
+  object_id: fa2fe215-da61-4e22-a75e-4accd8b373e0
+  sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
+  size: 503012

@@ -1,0 +1,5 @@
+source "https://rubygems.org"
+
+gem "riemann-tools"
+gem "riemann-elasticsearch"
+gem "riemann-aws"

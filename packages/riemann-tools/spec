@@ -1,0 +1,8 @@
+---
+name: riemann-tools
+
+dependencies:
+- ruby-2.1
+
+files:
+- riemann-tools/**/*
