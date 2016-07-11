@@ -25,7 +25,6 @@ properties:
 
   riemann_emitter.elastic.host:
     description: "Host of the Elastic server to emit metrics for."
-    default: localhost:9200
 
   riemann_emitter.elastic.port:
     description: "Port of the Elastic server to emit metrics for."
