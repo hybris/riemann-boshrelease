@@ -16,6 +16,7 @@ templates:
    config/disk.clj.erb: include/disk.clj
    config/swap.clj.erb: include/swap.clj
    config/logging.clj.erb: include/logging.clj
+   config/logsearch.clj.erb: include/logsearch.clj
    config/interface.clj.erb: include/interface.clj
    config/influxdb.clj.erb: include/influxdb.clj
 
