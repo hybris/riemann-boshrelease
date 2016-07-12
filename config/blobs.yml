@@ -23,3 +23,7 @@ ruby-2.1/yaml-0.1.6.tar.gz:
   object_id: fa2fe215-da61-4e22-a75e-4accd8b373e0
   sha: f3d404e11bec3c4efcddfd14c42d46f1aabe0b5d
   size: 503012
+jq/jq-1.5.gz:
+  object_id: 1b40bb93-91f4-4a5a-8771-c9bfd287100f
+  sha: ef4e1cbbcf17bcb65ba983098bedf78cd5bff21b
+  size: 1364752

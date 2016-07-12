@@ -1,0 +1,5 @@
+check process riemann-checklogs
+  with pidfile /var/vcap/sys/run/riemann-checklogs/riemann-checklogs.pid
+  start program "/var/vcap/jobs/riemann-checklogs/bin/monit_debugger cron_ctl '/var/vcap/jobs/riemann-checklogs/bin/cron_ctl start'"
+  stop program "/var/vcap/jobs/riemann-checklogs/bin/monit_debugger cron_ctl '/var/vcap/jobs/riemann-checklogs/bin/cron_ctl stop'"
+  group vcap
