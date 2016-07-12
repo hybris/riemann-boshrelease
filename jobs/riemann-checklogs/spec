@@ -3,6 +3,7 @@ name: riemann-checklogs
 
 templates:
   bin/check-logs.sh: bin/check-logs.sh
+  bin/monit_debugger: bin/monit_debugger
   bin/cron_ctl: bin/cron_ctl
   bin/sleeper: bin/sleeper
   config/riemann-checklogs.erb: config/riemann-checklogs
