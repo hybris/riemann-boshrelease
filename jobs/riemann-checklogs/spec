@@ -3,7 +3,11 @@ name: riemann-checklogs
 
 templates:
   bin/check-logs.sh: bin/check-logs.sh
+  bin/cron_ctl: bin/cron_ctl
+  bin/sleeper: bin/sleeper
   config/riemann-checklogs.erb: config/riemann-checklogs
+  helpers/ctl_setup.sh: helpers/ctl_setup.sh
+  helpers/ctl_utils.sh: helpers/ctl_utils.sh
 
 packages:
 - jq-1.5

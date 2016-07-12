@@ -1,23 +1,5 @@
-<% if_p("riemann_emitter.health") do %>
-check process riemann-health
-  with pidfile /var/vcap/sys/run/riemann-emitter/riemann-health.pid
-  start program "/var/vcap/jobs/riemann-emitter/bin/riemann-health_ctl start"
-  stop program "/var/vcap/jobs/riemann-emitter/bin/riemann-health_ctl stop"
+check process riemann-checklogs
+  with pidfile /var/vcap/sys/run/riemann-checklogs/riemann-checklogs.pid
+  start program "/var/vcap/jobs/riemann-checklogs/bin/monit_debugger cron_ctl '/var/vcap/jobs/riemann-checklogs/bin/cron_ctl start'"
+  stop program "/var/vcap/jobs/riemann-checklogs/bin/monit_debugger cron_ctl '/var/vcap/jobs/riemann-checklogs/bin/cron_ctl stop'"
   group vcap
-<% end %>
-
-<% if_p("riemann_emitter.elastic.host") do %>
-check process riemann-elastic
-  with pidfile /var/vcap/sys/run/riemann-emitter/riemann-elastic.pid
-  start program "/var/vcap/jobs/riemann-emitter/bin/riemann-elastic_ctl start"
-  stop program "/var/vcap/jobs/riemann-emitter/bin/riemann-elastic_ctl stop"
-  group vcap
-<% end %>
-
-<% if_p("riemann_emitter.rds.instance_name") do %>
-check process riemann-rds
-  with pidfile /var/vcap/sys/run/riemann-emitter/riemann-rds.pid
-  start program "/var/vcap/jobs/riemann-emitter/bin/riemann-rds_ctl start"
-  stop program "/var/vcap/jobs/riemann-emitter/bin/riemann-rds_ctl stop"
-  group vcap
-<% end %>
