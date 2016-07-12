@@ -1,0 +1,12 @@
+(info "Loading elastic alerts")
+
+(defn elastic-alerts [pd]
+  (info "Setting up elastic alerts")
+
+  (where
+    (service "elasticsearch health")
+      (changed-state {:init "ok"}
+        (where (state "critical") (:trigger pd)
+          (else (where (state "ok") (:resolve pd)))
+          (else (where (state "warning") #(warn %))))))
+)
