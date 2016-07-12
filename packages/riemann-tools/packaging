@@ -1,0 +1,9 @@
+set -e -x
+
+rsync -a riemann-tools/ ${BOSH_INSTALL_TARGET}
+
+# install gems from cache
+pushd ${BOSH_INSTALL_TARGET}
+  /var/vcap/packages/ruby-2.1/bin/bundle install \
+    --local --deployment --without development test
+popd
