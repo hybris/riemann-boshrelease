@@ -7,6 +7,7 @@
 (include "/var/vcap/jobs/riemann/include/logging.clj")
 (include "/var/vcap/jobs/riemann/include/pagerduty.clj")
 (include "/var/vcap/jobs/riemann/include/health_monitor.clj")
+(include "/var/vcap/jobs/riemann/include/logsearch.clj")
 (include "/var/vcap/jobs/riemann/include/elastic.clj")
 (include "/var/vcap/jobs/riemann/include/clamav.clj")
 (include "/var/vcap/jobs/riemann/include/snort.clj")
@@ -19,6 +20,7 @@
    (default :ttl 60
      index
      (hm-alerts pd)
+     (logsearch-alerts pd)
      (elastic-alerts pd)
      (clamav-alerts pd)
      (snort-alerts pd)

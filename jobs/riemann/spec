@@ -74,6 +74,11 @@ properties:
     description: "Amount of swap in bits remaining before warning"
     default: 5000000000
 
+  riemann.logsearch.platform_logs_threshold:
+    description: "Minimum number of platform logs per interval"
+  riemann.logsearch.app_logs_threshold:
+    description: "Minimum number of application logs per interval"
+
   # InfluxDB client configurations
   riemann.influxdb.host:
     description: "InfluxDB host"
