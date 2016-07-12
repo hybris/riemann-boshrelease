@@ -1,0 +1,17 @@
+---
+name: riemann-checklogs
+
+templates:
+  bin/check-logs.sh: bin/check-logs.sh
+  config/riemann-checklogs.erb: config/riemann-checklogs
+
+packages:
+- jq-1.5
+
+properties:
+  riemann_checklogs.interval:
+    description: "Time to subtract from now() before emitting"
+    default: "5m"
+  riemann_checklogs.ttl:
+    description: "Time between alerts before event expires"
+    default: 600
