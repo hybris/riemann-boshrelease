@@ -1,2 +1,2 @@
 # m h dom mon dow user  command
-*/5 * * * * root TTL="<%= p("riemann_checklogs.interval") %>" INTERVAL="<%= p("riemann_checklogs.interval") %>" ES_URL="<%= p("riemann_checklogs.es_url") %>" /var/vcap/jobs/riemann-checklogs/bin/check-logs.sh
+*/5 * * * * root TTL="<%= p("riemann_checklogs.ttl") %>" INTERVAL="<%= p("riemann_checklogs.interval") %>" ES_URL="<%= p("riemann_checklogs.es_url") %>" /var/vcap/jobs/riemann-checklogs/bin/check-logs.sh
