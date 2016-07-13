@@ -3,5 +3,4 @@ final_name: riemann
 blobstore:
   provider: s3
   options:
-    bucket_name: cloud-gov-release-blobstore
-    # bucket_name: 18f-boshrelease-blob
+    bucket_name: 18f-boshrelease-blob
