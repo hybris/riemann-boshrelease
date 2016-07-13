@@ -7,16 +7,18 @@ templates:
   bin/cron_ctl: bin/cron_ctl
   bin/sleeper: bin/sleeper
   config/riemann-checklogs.erb: config/riemann-checklogs
-  helpers/ctl_setup.sh: helpers/ctl_setup.sh
   helpers/ctl_utils.sh: helpers/ctl_utils.sh
 
 packages:
 - jq-1.5
 
 properties:
-  riemann_checklogs.interval:
-    description: "Time to subtract from now() before emitting"
-    default: "5m"
   riemann_checklogs.ttl:
     description: "Time between alerts before event expires"
     default: 600
+  riemann_checklogs.interval:
+    description: "Time to subtract from now() before emitting"
+    default: "5m"
+  riemann_checklogs.es_url:
+    description: "Elasticsearch URL"
+    default: http://localhost:9200
