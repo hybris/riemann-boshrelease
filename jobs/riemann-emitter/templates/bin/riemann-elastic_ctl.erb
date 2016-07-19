@@ -39,8 +39,8 @@ case $1 in
       --host <%= p("riemann_emitter.host") %> \
       --port <%= p("riemann_emitter.port") %> \
       --event-host <%= name %>-<%= index %> \
-      --es-host <%= p("riemann_emitter.elastic.host") %> \
-      --es-port <%= p("riemann_emitter.elastic.port") %> \
+      --es-host <%= p("riemann_emitter.elastic.host", "unspecified") %> \
+      --es-port <%= p("riemann_emitter.elastic.port", "unspecified") %> \
       >> $LOG_DIR/riemann-elastic.out.log \
       2>> $LOG_DIR/riemann-elastic.err.log
     ;;
