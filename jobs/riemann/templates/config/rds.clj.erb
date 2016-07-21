@@ -5,7 +5,7 @@
 
   <% if_p("riemann.rds.cpu_threshold") do %>
     (where
-      (service #"[a-zA-Z0-9-]+\.CPUUtilization Percent")
+      (service #"[a-zA-Z0-9-]+\.CPUUtilization \(Percent\)")
         (changed :metric
           (where (>= metric <%= p("riemann.rds.cpu_threshold") %>)
             (:trigger pd)
