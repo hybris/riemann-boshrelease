@@ -21,7 +21,9 @@
    (default :ttl 60
      index
      (hm-alerts pd)
+     <% if_p("riemann.logsearch.platform_logs_threshold", "riemann.logsearch.app_logs_threshold") do %>
      (logsearch-alerts pd)
+     <% end %>
      (elastic-alerts pd)
      (rds-alerts pd)
      (clamav-alerts pd)
