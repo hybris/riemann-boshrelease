@@ -3,7 +3,9 @@
 (defn clamav-alerts [pd]
   (info "Setting up clamav alerts")
 
-  (where
-    (and (service "clamav") (state "critical"))
-    (:trigger pd))
-)
+  (try
+    (where
+      (and (service "clamav") (state "critical"))
+      (:trigger pd))
+    (catch Exception e #(warn "clamav-exception: " (.getMessage e)))
+  ))

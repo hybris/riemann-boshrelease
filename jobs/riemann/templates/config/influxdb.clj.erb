@@ -5,5 +5,7 @@
                       :db "<%= p("riemann.influxdb.database") %>"
 		      :version :<%= p("riemann.influxdb.version") %>})
 
-(defn influx [opts] (batch 500 30 (influxdb (merge influxdb-config opts))))
+(defn influx [opts] (batch 500 30 (try
+  (influxdb (merge influxdb-config opts))
+  (catch Exception e #(warn "influx-exception: " (.getMessage e))))))
 

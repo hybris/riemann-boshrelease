@@ -2,14 +2,16 @@
 
 (defn swap-alerts [pd]
   (info "Setting up swap alerts")
-    (where
-      (service "swap/percent-used")
-        (pipe -
-          (splitp < metric
-            <%= p("riemann.swap.critical") %> (with :state "critical" -)
-            <%= p("riemann.swap.warn") %> (with :state "warn" -)
-                       (with :state "ok" -))
-          (changed-state {:init "ok"} (where (state "ok") (:resolve pd)
-                                        (else (where (state "critical") (:trigger pd)
-                                        (else (where (state "warn") #(warn "Swap space is low: " %))))))))))
+    (try
+      (where
+        (service "swap/percent-used")
+          (pipe -
+            (splitp < metric
+              <%= p("riemann.swap.critical") %> (with :state "critical" -)
+              <%= p("riemann.swap.warn") %> (with :state "warn" -)
+                         (with :state "ok" -))
+            (changed-state {:init "ok"} (where (state "ok") (:resolve pd)
+                                          (else (where (state "critical") (:trigger pd)
+                                          (else (where (state "warn") #(warn "Swap space is low: " %)))))))))
+       (catch Exception e #(warn "swap-exception: " (.getMessage e)))))
 
