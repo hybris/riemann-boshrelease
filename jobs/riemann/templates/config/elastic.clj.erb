@@ -10,5 +10,5 @@
           (where (state "critical") (:trigger pd)
             (else (where (state "ok") (:resolve pd)))
             (else (where (state "warning") #(warn %))))))
-)
-  (catch Exception e #(warn "elastic-exception: " (.getMessage e))))
+(catch Exception e #(warn "elastic-exception: " (.getMessage e)))
+  ))
