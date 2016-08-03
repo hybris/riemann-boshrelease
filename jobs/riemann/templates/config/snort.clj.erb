@@ -7,5 +7,5 @@
     (where
       (and (service "snort") (state "critical"))
       (:trigger pd))
-    (catch Exception e #(warn "snort-exception: " e)))
+    (catch Exception e #(warn "snort-exception: " (.getMessage e))))
 )

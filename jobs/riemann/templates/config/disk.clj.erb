@@ -14,4 +14,4 @@
                                         (else (where (state "critical") (:trigger pd)))
                                         (else (where (state "warn") #(warn "Disk space is low: " %)))))
 ))
-  (catch Exception e #(warn "disk-alert-exception: " e))))
+  (catch Exception e #(warn "disk-alert-exception: " (.getMessage e)))))

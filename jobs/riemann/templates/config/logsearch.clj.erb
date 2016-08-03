@@ -10,13 +10,13 @@
           (service "logsearch.health.platform")
           (<= metric <%= p("riemann.logsearch.platform_logs_threshold") %>))
         (:trigger pd))
-    (catch Exception e #(warn "logsearch.platform_logs_threshold-exception: " e)))
+    (catch Exception e #(warn "logsearch.platform_logs_threshold-exception: " (.getMessage e))))
 
     (try
       (where
         (and (service "logsearch.health.platform") (state "expired"))
         (:trigger pd))
-    (catch Exception e #(warn "logsearch.health.platform-exception: " e)))
+    (catch Exception e #(warn "logsearch.health.platform-exception: " (.getMessage e))))
   <% end %>
 
   <% if_p("riemann.logsearch.app_logs_threshold") do %>
@@ -26,12 +26,12 @@
           (service "logsearch.health.app")
           (<= metric <%= p("riemann.logsearch.app_logs_threshold") %>))
         (:trigger pd))
-      (catch Exception e #(warn "logsearch.logsearch.app_logs_threshold-exception: " e)))
+      (catch Exception e #(warn "logsearch.logsearch.app_logs_threshold-exception: " (.getMessage e))))
 
     (try
       (where
         (and (service "logsearch.health.app") (state "expired"))
         (:trigger pd))
-      (catch Exception e #(warn "logsearch.health.app-exception: " e)))
+      (catch Exception e #(warn "logsearch.health.app-exception: " (.getMessage e))))
   <% end %>
 )

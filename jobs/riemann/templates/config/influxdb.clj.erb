@@ -7,5 +7,5 @@
 
 (defn influx [opts] (batch 500 30 (try
   (influxdb (merge influxdb-config opts))
-  (catch Exception e #(warn "influx-exception: " e)))))
+  (catch Exception e #(warn "influx-exception: " (.getMessage e))))))
 

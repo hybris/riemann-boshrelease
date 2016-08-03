@@ -7,5 +7,5 @@
     (where
       (and (service "clamav") (state "critical"))
       (:trigger pd))
-    (catch Exception e #(warn "clamav-exception: " e))
+    (catch Exception e #(warn "clamav-exception: " (.getMessage e)))
   ))

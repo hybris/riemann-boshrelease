@@ -11,4 +11,4 @@
             (else (where (state "ok") (:resolve pd)))
             (else (where (state "warning") #(warn %))))))
 )
-  (catch Exception e #(warn "elastic-exception: " e)))
+  (catch Exception e #(warn "elastic-exception: " (.getMessage e))))

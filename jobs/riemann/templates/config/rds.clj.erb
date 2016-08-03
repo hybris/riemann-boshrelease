@@ -11,6 +11,6 @@
             (where (>= metric <%= p("riemann.rds.cpu_threshold") %>)
               (:trigger pd)
               (else (:resolve pd)))))
-      (catch Exception e #(warn "rds.cpu_threshold-exception: " e)))
+      (catch Exception e #(warn "rds.cpu_threshold-exception: " (.getMessage e))))
   <% end %>
 )

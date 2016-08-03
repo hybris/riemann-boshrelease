@@ -6,4 +6,4 @@
     (where
       (and (service "bosh.hm") (state "alert"))
       (:trigger pd))
-  (catch Exception e #(warn "clamav-exception: " e))))
+  (catch Exception e #(warn "clamav-exception: " (.getMessage e)))))
