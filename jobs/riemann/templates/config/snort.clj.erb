@@ -3,7 +3,9 @@
 (defn snort-alerts [pd]
   (info "Setting up snort alerts")
 
-  (where
-    (and (service "snort") (state "critical"))
-    (:trigger pd))
+  (try
+    (where
+      (and (service "snort") (state "critical"))
+      (:trigger pd))
+    (catch Exception e #(warn "snort-exception: " e)))
 )

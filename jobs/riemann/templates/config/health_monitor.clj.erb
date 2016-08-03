@@ -2,8 +2,8 @@
 
 (defn hm-alerts [pd]
   (info "Setting up health monitor alerts")
-
-  (where
-    (and (service "bosh.hm") (state "alert"))
-    (:trigger pd))
-)
+  (try
+    (where
+      (and (service "bosh.hm") (state "alert"))
+      (:trigger pd))
+  (catch Exception e #(warn "clamav-exception: " e))))
