@@ -10,6 +10,7 @@ templates:
    config/pagerduty.clj.erb: include/pagerduty.clj
    config/expire.clj.erb: include/expire.clj
    config/health_monitor.clj.erb: include/health_monitor.clj
+   config/firehose.clj.erb: include/firehose.clj
    config/elastic.clj.erb: include/elastic.clj
    config/rds.clj.erb: include/rds.clj
    config/clamav.clj.erb: include/clamav.clj
@@ -80,6 +81,13 @@ properties:
     description: "Minimum number of platform logs per interval"
   riemann.logsearch.app_logs_threshold:
     description: "Minimum number of application logs per interval"
+
+  riemann.firehose.cc_5XX_ratio:
+    description: "Alert threshold for Cloud Controller 5XX response ratio"
+  riemann.firehose.cc_latency_99:
+    description: "Alert threshold for Cloud Controller 99th %-ile latency"
+  riemann.firehose.uaa_latency_99:
+    description: "Alert threshold for UAA 99th %-ile latency"
 
   riemann.rds.cpu_threshold:
     description: "CPU utilization alert threshold"
