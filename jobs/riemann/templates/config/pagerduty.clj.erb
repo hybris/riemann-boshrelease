@@ -1,2 +1,2 @@
 (info "Loading pagerduty integration")
-(def pd (pagerduty "<%= p("riemann.pagerduty_api_key") %>"))
+(def pd (pagerduty { :service-key "<%= p("riemann.pagerduty_api_key") %>" }))
