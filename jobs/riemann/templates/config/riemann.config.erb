@@ -9,6 +9,7 @@
 (include "/var/vcap/jobs/riemann/include/logging.clj")
 (include "/var/vcap/jobs/riemann/include/pagerduty.clj")
 (include "/var/vcap/jobs/riemann/include/health_monitor.clj")
+(include "/var/vcap/jobs/riemann/include/firehose.clj")
 (include "/var/vcap/jobs/riemann/include/logsearch.clj")
 (include "/var/vcap/jobs/riemann/include/elastic.clj")
 (include "/var/vcap/jobs/riemann/include/rds.clj")
@@ -23,13 +24,21 @@
    (default :ttl 60
      index
      (hm-alerts pd)
+
      <% if_p("riemann.logsearch.platform_logs_threshold", "riemann.logsearch.app_logs_threshold") do %>
      (logsearch-alerts pd)
      <% end %>
+
+     <% if_p("riemann.firehose.cc_5XX_ratio", "riemann.firehose.cc_latency_99", "riemann.firehose.uaa_latency_99") do %>
+     (firehose-alerts pd)
+     <% end %>
+
      (elastic-alerts pd)
+
      <% if_p("riemann.rds.cpu_threshold") do %>
      (rds-alerts pd)
      <% end %>
+
      (clamav-alerts pd)
      (snort-alerts pd)
      (disk-alerts pd)
