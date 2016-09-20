@@ -11,7 +11,7 @@ fi
 
 CREDENTIALS=$(mktemp /tmp/credentials.XXXXX)
 
-pull_credentials riemann concourse credentials.yml.erb ${CREDENTIALS}
+vault read -field=value -tls-skip-verify secret/concourse/riemann-boshrelease > ${CREDENTIALS}
 
 fly -t ${TARGET} set-pipeline -c pipeline.yml --load-vars-from=${CREDENTIALS} --pipeline=${PIPELINE_NAME}
 if [ $? -ne 0 ]; then
