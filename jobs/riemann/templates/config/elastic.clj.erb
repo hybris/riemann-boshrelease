@@ -4,11 +4,19 @@
   (info "Setting up elastic alerts")
 
   (try
-    (where
-      (service "elasticsearch health")
-        (changed-state {:init "ok"}
-          (where (state "critical") (:trigger pd)
-            (else (where (state "ok") (:resolve pd)))
-            (else (where (state "warning") #(warn %))))))
-(catch Exception e #(warn "elastic-exception: " (.getMessage e)))
-  ))
+    (where (and (service "elasticsearch health") (not (expired? event)))
+      (moving-time-window 60
+        (smap (fn [events]
+          (let [ratio (/ (count (filter #(= "ok" (:state %)) events))
+                         (count events))]
+            (event {:service "elasticsearch health window"
+                    :metric  ratio
+                    :state   (condp > ratio
+                              0.9 "critical"
+                              1.0 "warning"
+                                  "ok")})))
+          (changed-state {:init "ok"}
+            (where (state "ok") (:resolve pd)
+              (else (where (state "warning") #(warn %)))
+              (else (where (state "critical") (:trigger pd))))))))
+    (catch Exception e #(warn "elastic-exception: " (.getMessage e)))))
