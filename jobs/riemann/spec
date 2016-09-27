@@ -92,6 +92,20 @@ properties:
   riemann.rds.cpu_threshold:
     description: "CPU utilization alert threshold"
 
+  # Email client configurations
+  riemann.mailer.to:
+    description: "Mail to address"
+  riemann.mailer.from:
+    description: "Mail from address"
+  riemann.mailer.smtp-server:
+    description: "SMTP Server"
+  riemann.mailer.smtp-port:
+    description: "SMTP Port"
+  riemann.mailer.smtp-user:
+    description: "SMTP User"
+  riemann.mailer.smtp-password:
+    description: "SMTP Password"
+
   # InfluxDB client configurations
   riemann.influxdb.host:
     description: "InfluxDB host"

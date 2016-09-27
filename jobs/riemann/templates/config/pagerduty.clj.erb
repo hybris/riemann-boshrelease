@@ -1,2 +1,4 @@
 (info "Loading pagerduty integration")
-(def pd (pagerduty { :service-key "<%= p("riemann.pagerduty_api_key") %>" }))
+
+(defn pd-wrapper [trigger-fn] (fn [event] (try (trigger-fn event) (catch Exception err (sendAlert event)))))
+(def pd (let [pd (pagerduty {:service-key "<%= p("riemann.pagerduty_api_key") %>" })] (assoc pd :trigger (pd-wrapper (:trigger pd)))))
