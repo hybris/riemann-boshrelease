@@ -1,0 +1,26 @@
+---
+packages:
+- name: java
+  version: 1dab29614aba5dcec2bc03c1dd7c06ad2e803212
+  fingerprint: 1dab29614aba5dcec2bc03c1dd7c06ad2e803212
+  sha1: d0ecfdce78cf7a18ee76aad6def6aafa65b37e4b
+  dependencies: []
+- name: riemann
+  version: 59d7e87c5a016dc749a364514d707e906ec06006
+  fingerprint: 59d7e87c5a016dc749a364514d707e906ec06006
+  sha1: 8a329609c40a42ebe5c792fd373d6bc7bac3e66b
+  dependencies:
+  - java
+jobs:
+- name: riemann
+  version: 376999e112bfc7c706d3b6807bfcd9e140227e87
+  fingerprint: 376999e112bfc7c706d3b6807bfcd9e140227e87
+  sha1: deb0ddb76340d2fdf9822fcf61d52ac6cae9f8f0
+license:
+  version: 20f5c57713d88e62da7ca2d033365f09d096cfb2
+  fingerprint: 20f5c57713d88e62da7ca2d033365f09d096cfb2
+  sha1: 4ca1e85a21f64e26993b841fbda58ac88504c036
+commit_hash: dd7bdd2b
+uncommitted_changes: false
+name: riemann
+version: 0.22.0
