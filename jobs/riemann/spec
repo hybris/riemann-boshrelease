@@ -21,6 +21,7 @@ templates:
    config/logsearch.clj.erb: include/logsearch.clj
    config/interface.clj.erb: include/interface.clj
    config/influxdb.clj.erb: include/influxdb.clj
+   config/alert.clj.erb: include/alert.clj
 
 packages:
   - java
