@@ -10,6 +10,10 @@ export AWS_DEFAULT_REGION=$(curl http://169.254.169.254/latest/dynamic/instance-
 
 for GROUP in  `$AWSCLI_PATH logs describe-log-groups | $JQ_PATH -r .logGroups[].logGroupName`; do
 	LAST_UPDATE=$($AWSCLI_PATH logs describe-log-streams --log-group-name=$GROUP --order-by LastEventTime --descending --max-items 1 | $JQ_PATH .logStreams[].lastEventTimestamp)
+	if [ -z "$LAST_UPDATE" ]; then
+		LAST_UPDATE=0
+	fi
+
 	NICE_GROUP=$(echo $GROUP | tr /. - | sed s/^-//)
 
 	${RIEMANNC_PATH} --service "awslogs.$NICE_GROUP.lastEventTimestamp" --host $(hostname) --ttl ${TTL} --metric_sint64 ${LAST_UPDATE}

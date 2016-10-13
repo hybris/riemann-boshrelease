@@ -19,6 +19,7 @@
 (include "/var/vcap/jobs/riemann/include/disk.clj")
 (include "/var/vcap/jobs/riemann/include/swap.clj")
 (include "/var/vcap/jobs/riemann/include/influxdb.clj")
+(include "/var/vcap/jobs/riemann/include/awslogs.clj")
 
 (let [index (index)]
   (streams
@@ -38,6 +39,10 @@
 
      <% if_p("riemann.rds.cpu_threshold") do %>
      (rds-alerts pd)
+     <% end %>
+
+     <% if_p("riemann.awslogs.kubernetes") do %>
+     (awslogs-alerts pd)
      <% end %>
 
      (clamav-alerts pd)
