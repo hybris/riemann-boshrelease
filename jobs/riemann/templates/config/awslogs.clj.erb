@@ -1,0 +1,16 @@
+(info "Loading AWSLOGS alerts")
+
+(defn awslogs-alerts [pd]
+  (info "Setting up AWSLOGS alerts")
+
+  <% if_p("riemann.awslogs.kubernetes") do %>
+    (try
+      (where
+        (service #"awslogs.kubernetes*")
+          (changed :metric
+            (where (> (- (System/currentTimeMillis) metric) (* <%= p("riemann.awslogs.kubernetes") %> 1000))
+              (:trigger pd)
+              (else (:resolve pd)))))
+      (catch Exception e #(warn "awslogs.kubernetes-exception: " (.getMessage e))))
+  <% end %>
+)

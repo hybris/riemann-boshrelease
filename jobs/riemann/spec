@@ -21,6 +21,8 @@ templates:
    config/logsearch.clj.erb: include/logsearch.clj
    config/interface.clj.erb: include/interface.clj
    config/influxdb.clj.erb: include/influxdb.clj
+   config/alert.clj.erb: include/alert.clj
+   config/awslogs.clj.erb: include/awslogs.clj
 
 packages:
   - java
@@ -91,6 +93,11 @@ properties:
 
   riemann.rds.cpu_threshold:
     description: "CPU utilization alert threshold"
+
+  # aws logs settings
+  riemann.awslogs.kubernetes:
+    description: "An alert will be raised if kubernetes does not log anything to cloudwatch logs in this number of seconds"
+    default: 1800
 
   # Email client configurations
   riemann.mailer.to:
