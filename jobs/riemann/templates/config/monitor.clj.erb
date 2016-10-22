@@ -3,7 +3,7 @@
 (defn monitor-alerts [pd]
   (info "Setting up monitor alerts")
 
-  <% metrics.each do |metric| %>
+  <% p("riemann.monitor.metrics").each do |metric| %>
   (where (service "<%= metric["service"] %>")
     (where (or (expired? event) (> metric <%= metric["stddevs"] %>))
       (:trigger pd)
