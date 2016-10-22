@@ -11,6 +11,7 @@ templates:
    config/expire.clj.erb: include/expire.clj
    config/health_monitor.clj.erb: include/health_monitor.clj
    config/firehose.clj.erb: include/firehose.clj
+   config/monitor.clj.erb: include/monitor.clj
    config/elastic.clj.erb: include/elastic.clj
    config/rds.clj.erb: include/rds.clj
    config/clamav.clj.erb: include/clamav.clj
@@ -102,6 +103,13 @@ properties:
   riemann.awslogs.kubernetes:
     description: "An alert will be raised if kubernetes does not log anything to cloudwatch logs in this number of seconds"
     default: 1800
+
+  riemann.monitor.metrics:
+    description: "List of hashes with service name and outlier threshold in standard deviations"
+    example:
+    - service: monitor.uaa.audit_service.user_authentication_failure_count.stddevs
+      stddevs: 2
+    default: []
 
   # Email client configurations
   riemann.mailer.to:
