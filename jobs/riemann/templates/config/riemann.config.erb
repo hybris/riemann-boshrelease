@@ -36,8 +36,8 @@
      (firehose-alerts pd)
      <% end %>
 
-     <% if p("riemann.monitor.metrics").length do %>
-     (monitor pd)
+     <% if p("riemann.monitor.metrics").length > 0 %>
+     (monitor-alerts pd)
      <% end %>
 
      (elastic-alerts pd)
