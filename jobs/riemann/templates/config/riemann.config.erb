@@ -36,8 +36,8 @@
      (firehose-alerts pd)
      <% end %>
 
-     <% if p("riemann.monitor.metrics").length > 0 %>
-     (monitor-alerts pd)
+     <% p("riemann.monitor.metrics").each do |metric| %>
+     (monitor-alerts-<%= metric["service"] %> pd)
      <% end %>
 
      (elastic-alerts pd)
@@ -46,8 +46,8 @@
      (rds-alerts pd)
      <% end %>
 
-     <% if_p("riemann.awslogs.kubernetes") do %>
-     (awslogs-alerts pd)
+     <% p("riemann.awslogs.metrics") do |metric| %>
+     (awslogs-alert-<%= metric["service"] %> pd)
      <% end %>
 
      (clamav-alerts pd)

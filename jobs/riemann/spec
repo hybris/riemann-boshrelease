@@ -96,13 +96,12 @@ properties:
     description: "CPU utilization alert threshold"
 
   # aws logs settings
-  riemann.awslogs.global:
-    description: "An alert will be raised if no cloudwatch events are added to any log group in this number of seconds"
-    default: 300
-
-  riemann.awslogs.kubernetes:
-    description: "An alert will be raised if kubernetes does not log anything to cloudwatch logs in this number of seconds"
-    default: 1800
+  riemann.awslogs.metrics:
+    description: "List of hashes with service name and outlier threshold in seconds"
+    example:
+    - service: awslogs.kubernetes
+      thresholdhold: 1800
+    default: []
 
   riemann.monitor.metrics:
     description: "List of hashes with service name and outlier threshold in standard deviations"
