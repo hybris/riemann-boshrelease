@@ -54,5 +54,8 @@
      (snort-alerts pd)
      (disk-alerts pd)
      (swap-alerts pd)
-     (influx {:tags {"env" "<%= p("riemann.influxdb.database") %>"}})
+
+     ; Send events to influxdb with firehose attributes as tags
+     (influx {:tags {"env" "<%= p("riemann.influxdb.database") %>"}
+              :tag-fields #{:host :deployment :job :index :ip}})
 )))
