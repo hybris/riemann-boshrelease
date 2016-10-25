@@ -36,18 +36,18 @@
      (firehose-alerts pd)
      <% end %>
 
-     <% p("riemann.monitor.metrics").each do |metric| %>
-     (monitor-alerts-<%= metric["service"] %> pd)
+     <% if p("riemann.monitor.metrics").length > 0 %>
+     (monitor-alerts pd)
+     <% end %>
+
+     <% if p("riemann.awslogs.metrics").length > 0 %>
+     (awslogs-alerts pd)
      <% end %>
 
      (elastic-alerts pd)
 
      <% if_p("riemann.rds.cpu_threshold") do %>
      (rds-alerts pd)
-     <% end %>
-
-     <% p("riemann.awslogs.metrics") do |metric| %>
-     (awslogs-alert-<%= metric["service"] %> pd)
      <% end %>
 
      (clamav-alerts pd)

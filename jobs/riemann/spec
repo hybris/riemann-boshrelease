@@ -98,10 +98,11 @@ properties:
   # aws logs settings
   riemann.awslogs.metrics:
     description: "List of hashes with service name and outlier threshold in seconds"
-    example:
+    default:
     - service: awslogs.kubernetes
-      thresholdhold: 1800
-    default: []
+      threshold: 1800
+    - service: awslogs._GLOBAL
+      threshold: 300
 
   riemann.monitor.metrics:
     description: "List of hashes with service name and outlier threshold in standard deviations"

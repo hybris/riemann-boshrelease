@@ -1,10 +1,13 @@
 (info "Loading monitor alerts")
 
-<% p("riemann.monitor.metrics").each do |metric| %>
-(defn monitor-alerts-<%= metric["service"] %> [pd]
-  (info "Setting up monitor alert for service <%= metric["service"] %>")
-  (where (service "<%= metric["service"] %>")
-    (where (or (expired? event) (> metric <%= metric["stddevs"] %>))
-      (:trigger pd)
-      (else (:resolve pd)))))
-<% end %>
+(defn monitor-alerts [pd]
+  (info "Setting up monitor alerts")
+  (sdo
+    <% p("riemann.monitor.metrics").each do |metric| %>
+    (where (service "<%= metric["service"] %>")
+      (where (or (expired? event) (> metric <%= metric["stddevs"] %>))
+        (:trigger pd)
+        (else (:resolve pd))))
+    <% end %>
+  )
+)

@@ -1,12 +1,15 @@
-(info "Loading AWSLOGS alerts")
+(info "Loading awslogs alerts")
 
-<% p("riemann.awslogs.metrics").each do |metric| %>
-(defn awslogs-alert-<%= metric["service"] %> [pd]
-  (info "Setting up AWSLOGS alerts")
-  (where
-    (service #"<%= metric["service"] %>*")
-      (changed :metric
-        (where (> (- (System/currentTimeMillis) metric) (* <%= p(metric["threshold"]) %> 1000))
-          (:trigger pd)
-          (else (:resolve pd))))))
-<% end %>
+(defn awslogs-alerts [pd]
+  (info "Setting up awslogs alerts")
+  (sdo
+    <% p("riemann.awslogs.metrics").each do |metric| %>
+    (where
+      (service #"<%= metric["service"] %>*")
+        (changed :metric
+          (where (> (- (System/currentTimeMillis) metric) (* <%= metric["threshold"] %> 1000))
+            (:trigger pd)
+            (else (:resolve pd)))))
+    <% end %>
+  )
+)

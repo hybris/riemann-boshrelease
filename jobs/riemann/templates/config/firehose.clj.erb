@@ -3,38 +3,40 @@
 (defn firehose-alerts [pd]
   (info "Setting up firehose alerts")
 
-  <% if_p("riemann.firehose.cc_5XX_ratio") do %>
-  (try
-    (project
-      [(service "cf.cc.http_status.5XX") (service "cf.cc.requests.completed")]
-      (smap folds/quotient
-        (with :service "cf.cc.http_status.5XX_ratio"
+  (sdo
+    <% if_p("riemann.firehose.cc_5XX_ratio") do %>
+    (try
+      (project
+        [(service "cf.cc.http_status.5XX") (service "cf.cc.requests.completed")]
+        (smap folds/quotient
+          (with :service "cf.cc.http_status.5XX_ratio"
+            (changed :metric
+              (where (> metric <%= p("riemann.firehose.cc_5XX_ratio") %>)
+                (:trigger pd)
+                (else (:resolve pd)))))))
+    (catch Exception e #(warn "elastic-exception: " (.getMessage e))))
+    <% end %>
+
+    <% if_p("riemann.firehose.cc_latency_99") do %>
+    (try
+      (where (service "cf.gorouter.latency.CloudController")
+        (percentiles 60 [0.99]
           (changed :metric
-            (where (> metric <%= p("riemann.firehose.cc_5XX_ratio") %>)
+            (where (> metric <%= p("riemann.firehose.cc_latency_99") %>)
               (:trigger pd)
-              (else (:resolve pd)))))))
-  (catch Exception e #(warn "elastic-exception: " (.getMessage e))))
-  <% end %>
+              (else (:resolve pd))))))
+    (catch Exception e #(warn "latency-exception: " (.getMessage e)))
+    <% end %>
 
-  <% if_p("riemann.firehose.cc_latency_99") do %>
-  (try
-    (where (service "cf.gorouter.latency.CloudController")
-      (percentiles 60 [0.99]
-        (changed :metric
-          (where (> metric <%= p("riemann.firehose.cc_latency_99") %>)
-            (:trigger pd)
-            (else (:resolve pd))))))
-  (catch Exception e #(warn "latency-exception: " (.getMessage e)))
-  <% end %>
-
-  <% if_p("riemann.firehose.uaa_latency_99") do %>
-  (try
-    (where (service "cf.gorouter.latency.uaa")
-      (percentiles 60 [0.99]
-        (changed :metric
-          (where (> metric <%= p("riemann.firehose.uaa_latency_99") %>)
-            (:trigger pd)
-            (else (:resolve pd))))))
-  (catch Exception e #(warn "latency-exception: " (.getMessage e)))
-  <% end %>
+    <% if_p("riemann.firehose.uaa_latency_99") do %>
+    (try
+      (where (service "cf.gorouter.latency.uaa")
+        (percentiles 60 [0.99]
+          (changed :metric
+            (where (> metric <%= p("riemann.firehose.uaa_latency_99") %>)
+              (:trigger pd)
+              (else (:resolve pd))))))
+    (catch Exception e #(warn "latency-exception: " (.getMessage e)))
+    <% end %>
+  )
 )
