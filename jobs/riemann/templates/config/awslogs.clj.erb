@@ -1,28 +1,15 @@
-(info "Loading AWSLOGS alerts")
+(info "Loading awslogs alerts")
 
 (defn awslogs-alerts [pd]
-  (info "Setting up AWSLOGS alerts")
-
-  <% if_p("riemann.awslogs.global") do %>
-    (try
-      (where
-        (service #"awslogs._GLOBAL*")
-          (changed :metric
-            (where (> (- (System/currentTimeMillis) metric) (* <%= p("riemann.awslogs.global") %> 1000))
-              (:trigger pd)
-              (else (:resolve pd)))))
-      (catch Exception e #(warn "awslogs._GLOBAL-exception: " (.getMessage e))))
-  <% end %>
-
-
-  <% if_p("riemann.awslogs.kubernetes") do %>
-    (try
-      (where
-        (service #"awslogs.kubernetes*")
-          (changed :metric
-            (where (> (- (System/currentTimeMillis) metric) (* <%= p("riemann.awslogs.kubernetes") %> 1000))
-              (:trigger pd)
-              (else (:resolve pd)))))
-      (catch Exception e #(warn "awslogs.kubernetes-exception: " (.getMessage e))))
-  <% end %>
+  (info "Setting up awslogs alerts")
+  (sdo
+    <% p("riemann.awslogs.metrics").each do |metric| %>
+    (where
+      (service #"<%= metric["service"] %>*")
+        (changed :metric
+          (where (> (- (System/currentTimeMillis) metric) (* <%= metric["threshold"] %> 1000))
+            (:trigger pd)
+            (else (:resolve pd)))))
+    <% end %>
+  )
 )
