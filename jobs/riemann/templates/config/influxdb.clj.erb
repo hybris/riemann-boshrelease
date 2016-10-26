@@ -3,7 +3,7 @@
                       :username "<%= p("riemann.influxdb.username") %>"
                       :password "<%= p("riemann.influxdb.password") %>"
                       :db "<%= p("riemann.influxdb.database") %>"
-		      :version :<%= p("riemann.influxdb.version") %>})
+                      :version :<%= p("riemann.influxdb.version") %>})
 
 (defn influx [opts]
   (batch 1000 30
