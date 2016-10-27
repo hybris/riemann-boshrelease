@@ -33,9 +33,7 @@
      (logsearch-alerts pd)
      <% end %>
 
-     <% if_p("riemann.firehose.cc_5XX_ratio", "riemann.firehose.cc_latency_99", "riemann.firehose.uaa_latency_99") do %>
      (firehose-alerts pd)
-     <% end %>
 
      <% if p("riemann.monitor.metrics").length > 0 %>
      (monitor-alerts pd)

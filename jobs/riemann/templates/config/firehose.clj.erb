@@ -4,6 +4,21 @@
   (info "Setting up firehose alerts")
 
   (sdo
+    ; Inject synthetic events from throttled firehose
+    (where (service #"^cf\.")
+      (throttle 1 30
+        (with {:service "firehose.heartbeat"
+              :host "internal"
+              :state "ok"
+              :ttl 60}
+          reinject)))
+
+    ; Alert on synthetic event expiration
+    (where (service "firehose.heartbeat")
+      (changed-state {:init "ok"}
+        (where (state "ok") (:resolve pd)
+          (else (:trigger pd)))))
+
     <% if_p("riemann.firehose.cc_5XX_ratio") do %>
     (try
       (project
