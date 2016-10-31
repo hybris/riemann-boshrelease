@@ -34,6 +34,14 @@ case $1 in
       --host <%= p("riemann_emitter.host") %> \
       --port <%= p("riemann_emitter.port") %> \
       --event-host <%= name %>-<%= index %> \
+      --attribute bosh-job=<%= name %> \
+      --attribute bosh-deployment=<%= spec.deployment %> \
+<% p("riemann_emitter.attributes").each do |k, v| %> \
+      --attribute <%= esc("#{k}=#{v}") %> \
+<% end %> \
+<% p("riemann_emitter.tags").each do |tag| %> \
+      --tag <%= esc(tag) %> \
+<% end %> \
       >> $LOG_DIR/riemann-health.out.log \
       2>> $LOG_DIR/riemann-health.err.log
     ;;

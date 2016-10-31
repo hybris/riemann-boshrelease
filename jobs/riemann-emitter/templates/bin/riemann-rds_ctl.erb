@@ -43,6 +43,12 @@ case $1 in
       --access-key <%= esc(p("riemann_emitter.rds.access_key_id", "unspecified")) %> \
       --secret-key <%= esc(p("riemann_emitter.rds.secret_access_key", "unspecified")) %> \
       --region <%= p("riemann_emitter.rds.region", "unspecified") %> \
+<% p("riemann_emitter.attributes").each do |k, v| %> \
+      --attribute <%= esc("#{k}=#{v}") %> \
+<% end %> \
+<% p("riemann_emitter.tags").each do |tag| %> \
+      --tag <%= esc(tag) %> \
+<% end %> \
       >> $LOG_DIR/riemann-rds.out.log \
       2>> $LOG_DIR/riemann-rds.err.log
     ;;
