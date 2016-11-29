@@ -3,6 +3,15 @@
 (ns riemann.config
   (:require [riemann.time :as time]))
 
+; if we have slack creds, then define 'slacker' to be an interface as described here: http://riemann.io/howto.html#sent-events-to-slack
+; if we don't have creds, define 'slacker' to just print out whatever is passed to it, so other functions can depend on slacker being defined
+<% if p("riemann.slack.account").empty? || p("riemann.slack.token").empty? || p("riemann.slack.channel").empty? %>
+(def slacker #(prn "[slack]" %))
+<% else %>
+(def slack_credentials {:account "<%= p("riemann.slack.account") %>", :token "<%= p("riemann.slack.token") %>"})
+(def slacker (slack slack_credentials {:username "Riemann" :icon ":clojure:" :channel "<%= p("riemann.slack.channel") %>"}))
+<% end %>
+
 ;; plugins includes
 (include "/var/vcap/jobs/riemann/include/expire.clj")
 (include "/var/vcap/jobs/riemann/include/interface.clj")
@@ -24,6 +33,7 @@
 (include "/var/vcap/jobs/riemann/include/awslogs.clj")
 (include "/var/vcap/jobs/riemann/include/nessus.clj")
 (include "/var/vcap/jobs/riemann/include/unknown-vms.clj")
+(include "/var/vcap/jobs/riemann/include/no_logs.clj")
 
 (let [index (index)]
   (streams
@@ -60,6 +70,9 @@
      (swap-alerts pd)
 
      (unknown-vm-alert pd)
+
+     (find_vms_missing_logs)
+     (snapshot_and_stop_vm pd)
 
      (influxdb-backup-alerts pd)
 
