@@ -23,3 +23,9 @@ password  = p('riemann.mailer.smtp-password', nil)
     sendAlert
   )
 )
+
+(def sendAlertOnChange
+  (changed-state {:init "ok"}
+    sendAlert :state
+  )
+)
