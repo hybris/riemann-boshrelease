@@ -3,3 +3,6 @@ check process riemann
   start program "/var/vcap/jobs/riemann/bin/monit_debugger riemann_ctl '/var/vcap/jobs/riemann/bin/riemann_ctl start'"
   stop program "/var/vcap/jobs/riemann/bin/monit_debugger riemann_ctl '/var/vcap/jobs/riemann/bin/riemann_ctl stop'"
   group vcap
+
+check file riemannlog with path /var/vcap/sys/log/riemann/riemann.stdout.log
+  if content = "^java\.lang\.OutOfMemoryError: Java heap space$" then restart
