@@ -5,4 +5,4 @@ check process riemann
   group vcap
 
 check file riemannlog with path /var/vcap/sys/log/riemann/riemann.stdout.log
-  if content = "^java\.lang\.OutOfMemoryError: Java heap space$" then restart
+  if match "^java\.lang\.OutOfMemoryError: Java heap space$" then alert
