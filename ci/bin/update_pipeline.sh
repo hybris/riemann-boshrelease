@@ -11,7 +11,7 @@ fi
 
 CREDENTIALS=$(mktemp /tmp/credentials.XXXXX)
 
-vault read -field=value -tls-skip-verify secret/concourse/riemann-boshrelease > ${CREDENTIALS}
+vault read -format=json -tls-skip-verify secret/concourse/riemann-boshrelease | jq '.data' > ${CREDENTIALS}
 
 fly -t ${TARGET} set-pipeline -c pipeline.yml --load-vars-from=${CREDENTIALS} --pipeline=${PIPELINE_NAME}
 if [ $? -ne 0 ]; then
