@@ -12,6 +12,7 @@ export LANG=en_US.UTF-8
 JAVA_OPTS="-server -XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:+CMSParallelRemarkEnabled -XX:+AggressiveOpts -XX:+UseFastAccessorMethods -XX:+UseCompressedOops -XX:+CMSClassUnloadingEnabled"
 <% if_p("riemann.java.xms") do %>JAVA_OPTS="$JAVA_OPTS -Xms<%= p("riemann.java.xms") %>"<% end %>
 <% if_p("riemann.java.xmx") do %>JAVA_OPTS="$JAVA_OPTS -Xmx<%= p("riemann.java.xmx") %>"<% end %>
+<% if_p("riemann.java.additional_java_opts") do %>JAVA_OPTS="$JAVA_OPTS <%= p("riemann.java.additional_java_opts") %>"<% end %>
 
 # https://github.com/riemann/riemann/blob/0.2.10/src/riemann/transport/tcp.clj#L79-L85
 JAVA_OPTS="$JAVA_OPTS -Dnetty.epoll.enabled=<%= p("riemann.java.enable_netty_epoll") %>"
